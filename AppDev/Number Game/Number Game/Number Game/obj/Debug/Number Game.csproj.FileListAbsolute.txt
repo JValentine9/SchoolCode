@@ -1,0 +1,7 @@
+C:\Repos\SchoolCode\AppDev\Number Game\Number Game\Number Game\bin\Debug\Number Game.exe.config
+C:\Repos\SchoolCode\AppDev\Number Game\Number Game\Number Game\bin\Debug\Number Game.exe
+C:\Repos\SchoolCode\AppDev\Number Game\Number Game\Number Game\bin\Debug\Number Game.pdb
+C:\Repos\SchoolCode\AppDev\Number Game\Number Game\Number Game\obj\Debug\Number Game.csprojAssemblyReference.cache
+C:\Repos\SchoolCode\AppDev\Number Game\Number Game\Number Game\obj\Debug\Number Game.csproj.CoreCompileInputs.cache
+C:\Repos\SchoolCode\AppDev\Number Game\Number Game\Number Game\obj\Debug\Number Game.exe
+C:\Repos\SchoolCode\AppDev\Number Game\Number Game\Number Game\obj\Debug\Number Game.pdb
