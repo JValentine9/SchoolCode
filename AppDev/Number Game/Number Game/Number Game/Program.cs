@@ -16,10 +16,30 @@ namespace Number_Game
 
         static void Main(string[] args)
         {
-            Difficulty d;
-            d = SetDifficulty();
+            bool stillPlaying = true;
+            int cont;
 
-            Game(d);
+            while (stillPlaying)
+            {
+                Difficulty d;
+                d = SetDifficulty();
+
+                Game(d);
+                Console.Write("Would you like to continue? 1. Yes 2. No");
+                cont = int.Parse(Console.ReadLine());
+                switch (cont)
+                {
+                    case 1:
+                        stillPlaying = true;
+                        break;
+                    case 2:
+                        stillPlaying = false;
+                        break;
+                    default:
+                        Console.WriteLine("Can't decide? another game then.");
+                        break;
+                }
+            }
         }
 
         static public Difficulty SetDifficulty()
@@ -82,13 +102,15 @@ namespace Number_Game
 
                 if (input < ans)
                 {
-                    Console.WriteLine("A little low");
+                    Console.WriteLine("A little low.");
                     attempts--;
+                    Console.WriteLine($"Attempts Remaining: {attempts}");
                 }
                 else if (input > ans)
                 {
                     Console.WriteLine("A little high");
                     attempts--;
+                    Console.WriteLine($"Attempts Remaining: {attempts}");
                 }
                 else
                 {
@@ -99,6 +121,7 @@ namespace Number_Game
             if (correct)
             {
                 Console.WriteLine("You Win!");
+                Console.WriteLine(($"Guesses Remaining: {attempts}"));
             }
             else if (attempts < 1)
             {
