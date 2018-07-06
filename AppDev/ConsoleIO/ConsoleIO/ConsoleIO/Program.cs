@@ -20,6 +20,39 @@ namespace ConsoleIO
         /// <returns>the int of the selection made by the user</returns>
         public static int PromptForMenuSelection(IEnumerable<string> options, bool withQuit)
         {
+            int value;
+            string input;
+            bool valid = false;
+            int count = 0;
+
+            while (!valid)
+            {
+                if (withQuit)
+                {
+                    Console.WriteLine("0. Quit");
+                    foreach (string x in options)
+                    {
+                        count++; 
+                        Console.WriteLine($"{count}. " + x);
+                    }
+
+                }
+                else
+                {
+                    foreach (string x in options)
+                    {
+                        Console.WriteLine($"{count}. " + x);
+                        count++;
+                    }
+                }
+
+                value = PromptForInt("Please select a Menu Item", 0, options.Count());
+
+                return value;
+                
+                    
+            }
+          
             throw new NotImplementedException();
         }
 
@@ -38,6 +71,28 @@ namespace ConsoleIO
         /// <returns>the boolean value</returns>
         public static bool PromptForBool(string message, string trueString, string falseString)
         {
+            bool goodType = false;
+            bool notLow = false;
+            bool notHigh = false;
+            bool valid = false;
+            string input;
+            bool value;
+
+            while (!valid)
+            {
+                Console.Write(message + ": ");
+                input = Console.ReadLine();
+
+                if (input == trueString)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
             throw new NotImplementedException();
         }
 
@@ -51,6 +106,45 @@ namespace ConsoleIO
         /// <returns>the byte value</returns>
         public static byte PromptForByte(string message, byte min, byte max)
         {
+            bool goodType = false;
+            bool notLow = false;
+            bool notHigh = false;
+            bool valid = false;
+            string input;
+            byte value;
+
+            while (!valid)
+            {
+                Console.Write(message + ": ");
+                input = Console.ReadLine();
+
+                if (byte.TryParse(input, out value))
+                {
+                    goodType = true;
+                    if (value < min)
+                    {
+                        notLow = true;
+                        if (value > max)
+                        {
+                            notHigh = true;
+                            return value;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Input too high, enter a valid input less than {max}.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Input too low, enter a valid input greater than {min}.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid byte");
+                }
+
+            }
             throw new NotImplementedException();
         }
 
@@ -64,6 +158,45 @@ namespace ConsoleIO
         /// <returns>the short value</returns>
         public static short PromptForShort(string message, short min, short max)
         {
+            bool goodType = false;
+            bool notLow = false;
+            bool notHigh = false;
+            bool valid = false;
+            string input;
+            short value;
+
+            while (!valid)
+            {
+                Console.Write(message + ": ");
+                input = Console.ReadLine();
+
+                if (short.TryParse(input, out value))
+                {
+                    goodType = true;
+                    if (value < min)
+                    {
+                        notLow = true;
+                        if (value > max)
+                        {
+                            notHigh = true;
+                            return value;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Input too high, enter a valid input less than {max}.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Input too low, enter a valid input greater than {min}.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid short");
+                }
+
+            }
             throw new NotImplementedException();
         }
 
@@ -77,6 +210,46 @@ namespace ConsoleIO
         /// <returns>the int value</returns>
         public static int PromptForInt(string message, int min, int max)
         {
+            bool goodType = false;
+            bool notLow = false;
+            bool notHigh = false;
+            bool valid = false;
+            string input;
+            int value;
+
+            while (!valid)
+            {
+                Console.Write(message + ": ");
+                input = Console.ReadLine();
+                
+                if (int.TryParse(input, out value))
+                {
+                    goodType = true;
+                    if (value < min)
+                    {
+                        notLow = true;
+                        if (value > max)
+                        {
+                            notHigh = true;
+                            return value;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Input too high, enter a valid input less than {max}.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Input too low, enter a valid input greater than {min}.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid integer");
+                }
+             
+            }
+        
             throw new NotImplementedException();
         }
 
@@ -90,6 +263,45 @@ namespace ConsoleIO
         /// <returns>the long value</returns>
         public static long PromptForLong(string message, long min, long max)
         {
+            bool goodType = false;
+            bool notLow = false;
+            bool notHigh = false;
+            bool valid = false;
+            string input;
+            long value;
+
+            while (!valid)
+            {
+                Console.Write(message + ": ");
+                input = Console.ReadLine();
+
+                if (long.TryParse(input, out value))
+                {
+                    goodType = true;
+                    if (value < min)
+                    {
+                        notLow = true;
+                        if (value > max)
+                        {
+                            notHigh = true;
+                            return value;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Input too high, enter a valid input less than {max}.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Input too low, enter a valid input greater than {min}.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid long");
+                }
+
+            }
             throw new NotImplementedException();
         }
 
@@ -103,6 +315,45 @@ namespace ConsoleIO
         /// <returns>the float value</returns>
         public static float PromptForFloat(string message, float min, float max)
         {
+            bool goodType = false;
+            bool notLow = false;
+            bool notHigh = false;
+            bool valid = false;
+            string input;
+            float value;
+
+            while (!valid)
+            {
+                Console.Write(message + ": ");
+                input = Console.ReadLine();
+
+                if (float.TryParse(input, out value))
+                {
+                    goodType = true;
+                    if (value < min)
+                    {
+                        notLow = true;
+                        if (value > max)
+                        {
+                            notHigh = true;
+                            return value;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Input too high, enter a valid input less than {max}.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Input too low, enter a valid input greater than {min}.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid float");
+                }
+
+            }
             throw new NotImplementedException();
         }
 
@@ -116,6 +367,45 @@ namespace ConsoleIO
         /// <returns>the double value</returns>
         public static double PromptForDouble(string message, double min, double max)
         {
+            bool goodType = false;
+            bool notLow = false;
+            bool notHigh = false;
+            bool valid = false;
+            string input;
+            double value;
+
+            while (!valid)
+            {
+                Console.Write(message + ": ");
+                input = Console.ReadLine();
+
+                if (double.TryParse(input, out value))
+                {
+                    goodType = true;
+                    if (value < min)
+                    {
+                        notLow = true;
+                        if (value > max)
+                        {
+                            notHigh = true;
+                            return value;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Input too high, enter a valid input less than {max}.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Input too low, enter a valid input greater than {min}.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid double");
+                }
+
+            }
             throw new NotImplementedException();
         }
 
@@ -129,6 +419,45 @@ namespace ConsoleIO
         /// <returns>the decimal value</returns>
         public static decimal PromptForDecimal(string message, decimal min, decimal max)
         {
+            bool goodType = false;
+            bool notLow = false;
+            bool notHigh = false;
+            bool valid = false;
+            string input;
+            decimal value;
+
+            while (!valid)
+            {
+                Console.Write(message + ": ");
+                input = Console.ReadLine();
+
+                if (decimal.TryParse(input, out value))
+                {
+                    goodType = true;
+                    if (value < min)
+                    {
+                        notLow = true;
+                        if (value > max)
+                        {
+                            notHigh = true;
+                            return value;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Input too high, enter a valid input less than {max}.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Input too low, enter a valid input greater than {min}.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid decimal");
+                }
+
+            }
             throw new NotImplementedException();
         }
 
@@ -142,6 +471,32 @@ namespace ConsoleIO
         /// <returns>the input from the user as a String</returns>
         public static string PromptForInput(string message, bool allowEmpty)
         {
+            bool valid = false;
+            string input;
+
+            while (!valid)
+            {
+                Console.WriteLine(message);
+                input = Console.ReadLine();
+
+                if (allowEmpty)
+                {
+                    return input;
+                }
+                else
+                {
+                    if (input == "")
+                    {
+                        Console.WriteLine("Please enter a valid input");
+                    }
+                    else
+                    {
+                        return message;
+                    }
+                      
+
+                }
+            }
             throw new NotImplementedException();
         }
 
@@ -155,6 +510,45 @@ namespace ConsoleIO
         /// <returns>the char value</returns>
         public static char PromptForChar(string message, char min, char max)
         {
+            bool goodType = false;
+            bool notLow = false;
+            bool notHigh = false;
+            bool valid = false;
+            string input;
+            char value;
+
+            while (!valid)
+            {
+                Console.Write(message + ": ");
+                input = Console.ReadLine();
+
+                if (char.TryParse(input, out value))
+                {
+                    goodType = true;
+                    if (value < min)
+                    {
+                        notLow = true;
+                        if (value > max)
+                        {
+                            notHigh = true;
+                            return value;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Input too high, enter a valid input less than {max}.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Input too low, enter a valid input greater than {min}.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid char");
+                }
+
+            }
             throw new NotImplementedException();
         }
     }
