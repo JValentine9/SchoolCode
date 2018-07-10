@@ -38,8 +38,16 @@ namespace OverloadingOperators
         {
             WholeNumber = whole;
             Numerator = numerator;
-            denom = denominator;
-            Denominator = denominator;
+            if (denominator == 0)
+            {
+                throw ArgumentException;
+            }
+            else
+            {
+                denom = denominator;
+                Denominator = denominator;
+            }
+           
         }
 
             /// <summary>
@@ -158,7 +166,9 @@ namespace OverloadingOperators
         /// </summary>
         public void Reduce()
         {
-
+            int divisor = GCD(Numerator, Denominator);
+            Numerator = Numerator / divisor;
+            Denominator = Denominator / divisor;
         }
 
         /// <summary>
@@ -166,7 +176,9 @@ namespace OverloadingOperators
         /// </summary>
         public void MakeProper()
         {
-
+            int Add = Numerator / Denominator;
+            Numerator = Numerator % Denominator;
+            WholeNumber = WholeNumber + Add;
         }
 
         /// <summary>
@@ -174,7 +186,9 @@ namespace OverloadingOperators
         /// </summary>
         public void MakeImproper()
         {
-
+            int Add = WholeNumber + Denominator;
+            Numerator = Numerator + Add;
+            WholeNumber = 0;
         }
 
         /// <summary>
@@ -182,7 +196,8 @@ namespace OverloadingOperators
         /// </summary>
         public void Simplify()
         {
-
+            Reduce();
+            MakeProper();
         }
 
         /// <summary>
