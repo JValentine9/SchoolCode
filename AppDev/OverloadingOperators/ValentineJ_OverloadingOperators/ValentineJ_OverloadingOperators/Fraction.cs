@@ -40,7 +40,7 @@ namespace OverloadingOperators
             Numerator = numerator;
             if (denominator == 0)
             {
-                throw ArgumentException;
+                throw new ArgumentException();
             }
             else
             {
