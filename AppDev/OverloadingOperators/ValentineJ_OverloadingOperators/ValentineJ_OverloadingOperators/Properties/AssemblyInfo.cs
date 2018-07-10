@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Overloading Operators")]
+[assembly: AssemblyTitle("ValentineJ_OverloadingOperators")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Overloading Operators")]
+[assembly: AssemblyProduct("ValentineJ_OverloadingOperators")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("7132bcba-59cc-477a-8ce7-ebefe963578b")]
+[assembly: Guid("7720c72a-b9f8-4718-b26e-73ecae59e033")]
 
 // Version information for an assembly consists of the following four values:
 //

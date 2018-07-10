@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Overloading_Operators
+namespace ValentineJ_OverloadingOperators
 {
-    class Program
+    public struct Class1
     {
-        static void Main(string[] args)
-        {
-        }
+         
     }
 }
