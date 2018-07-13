@@ -114,14 +114,14 @@ namespace ExtMethods
         }
 
         /// <summary>
-        /// 
+        /// Shifts the value of a string by the amount of ShiftValue
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="ShiftValue"></param>
-        /// <returns></returns>
+        /// <param name="input">The string being shifted</param>
+        /// <param name="ShiftValue">The amount the string is to shift</param>
+        /// <returns>Returns the newly shifted string</returns>
         public static String Shift(this String input, int ShiftValue)
         {
-            return "lol get rekt";
+            return input.Substring(ShiftValue, input.Length - 1) + input.Substring(0, ShiftValue - 1);
         }
     }
 }
