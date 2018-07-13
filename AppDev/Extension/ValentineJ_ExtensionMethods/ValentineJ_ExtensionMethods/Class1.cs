@@ -71,24 +71,46 @@ namespace ExtMethods
         }
 
         /// <summary>
-        /// 
+        /// Returns a long of the extended int to the power of the chosen exponent
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="exponent"></param>
-        /// <returns></returns>
+        /// <param name="input">The number being affected</param>
+        /// <param name="exponent">The power to which the input is being raised</param>
+        /// <returns>Returns a long which is the input to the power of the exponent</returns>
         public static long ToPower(this int input, int exponent)
         {
-            return 2;
+            int ret = 1;
+            while (exponent != 0)
+            {
+                if ((exponent & 1) == 1)
+                    ret *= input;
+                input *= input;
+                exponent >>= 1;
+            }
+            return ret;
         }
 
         /// <summary>
-        /// 
+        /// Tests to see if a string is a palindrome
         /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
+        /// <param name="input">The string to be tested</param>
+        /// <returns>Returns a boolean stating wether or not a string is a palindrome</returns>
         public static bool IsPalindrome(this String input)
         {
-            return false;
+            string revStr = "";
+            int Length;
+            input = input.Replace(" ", String.Empty);
+            input = input.ToLower();
+
+            Length = input.Length - 1;
+            while (Length >= 0)
+            {
+                revStr = revStr + input[Length];
+                Length--;
+            }
+
+            return input.Equals(revStr);
+
+
         }
 
         /// <summary>
