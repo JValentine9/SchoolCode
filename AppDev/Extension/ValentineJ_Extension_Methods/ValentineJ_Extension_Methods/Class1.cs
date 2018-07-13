@@ -1,7 +1,8 @@
 ﻿using System;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -58,7 +59,7 @@ namespace ExtMethods
             int length = input.Count();
             int count = 0;
 
-            foreach(var item in input)
+            foreach (var item in input)
             {
                 Console.Write(item);
                 count++;

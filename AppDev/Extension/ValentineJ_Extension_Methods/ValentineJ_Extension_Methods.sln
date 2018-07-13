@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValentineJ_Extension_Methods", "ValentineJ_Extension_Methods\ValentineJ_Extension_Methods.csproj", "{69A383BB-4874-4C8C-A6BF-460CB8F75599}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69A383BB-4874-4C8C-A6BF-460CB8F75599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69A383BB-4874-4C8C-A6BF-460CB8F75599}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69A383BB-4874-4C8C-A6BF-460CB8F75599}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69A383BB-4874-4C8C-A6BF-460CB8F75599}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {26E09486-0546-4873-9E62-888AF8DD0E82}
+	EndGlobalSection
+EndGlobal
