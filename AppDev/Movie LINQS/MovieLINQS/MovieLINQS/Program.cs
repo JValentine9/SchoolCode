@@ -48,7 +48,7 @@ namespace MovieLINQS
             int avg = 0;
             int totYear = 0;
 
-            foreach(var Movie in MovieLoader.AllMovies)
+            foreach (var Movie in MovieLoader.AllMovies)
             {
                 totYear += Movie.Year;
             }
@@ -121,9 +121,9 @@ namespace MovieLINQS
 
             //Most Common Rating, Qty
             var PopRating = from Movie in MovieLoader.AllMovies
-                          group Movie by Movie.Rating into g
-                          orderby g.Count() descending
-                          select g;
+                            group Movie by Movie.Rating into g
+                            orderby g.Count() descending
+                            select g;
 
             /*
             foreach (var MovieGroup in PopRating)
@@ -137,7 +137,7 @@ namespace MovieLINQS
             }
             */
 
-            Console.WriteLine("Most Movies: ");
+            Console.WriteLine("Most Movies per Rating: ");
             foreach (var Movie in PopRating.Take(1))
             {
                 Console.WriteLine($"Rating: {Movie.Key}, Number of Movies: {Movie.Count()}");
@@ -155,8 +155,8 @@ namespace MovieLINQS
             }
 
             var LongTitle = from Movie in MovieLoader.AllMovies
-                             orderby Movie.Title.Length descending
-                             select Movie;
+                            orderby Movie.Title.Length descending
+                            select Movie;
             foreach (var Movie in LongTitle.Take(1))
             {
                 Console.WriteLine($"Longest Title: {Movie.Title}");
@@ -170,10 +170,10 @@ namespace MovieLINQS
             var RatingYears = from Movie in MovieLoader.AllMovies
                               group Movie by Movie.Rating into g
                               select g;
-            foreach(var Item in RatingYears)
+            foreach (var Item in RatingYears)
             {
-                
-                foreach(var Movie in Item)
+
+                foreach (var Movie in Item)
                 {
                     if (LowYear == 0 && HighYear == 0)
                     {
@@ -196,44 +196,157 @@ namespace MovieLINQS
                     {
                         LowYear = Movie.Year;
                     }
-                    
+
                     Distance = HighYear - LowYear;
-                
+
                     if (Distance > RcrdDist)
                     {
                         RcrdDist = Distance;
                         LongBoi = Item.Key;
                     }
-                    
+
                 }
-                
+
             }
             Console.WriteLine($"Rating: {LongBoi}, TimeSoan: {RcrdDist}");
 
             Console.WriteLine("************************************************");
 
             //Films per Decade over total year range
+            var Decades = from Movie in MovieLoader.AllMovies
+                          group Movie by Movie.Year / 10 into g
+                          orderby g.Key descending
+                          select g;
+            foreach (var Item in Decades)
+            {
+                string MyString = Item.Key.ToString();
+                Console.WriteLine($"{MyString.Substring(2, 1) + 0}\'s: {Item.Count()}");
 
+            }
 
             Console.WriteLine("************************************************");
 
             //Unused Ratings in MPAARating Enum
+            bool UsedG = false, UsedNC17 = false, UsedNotRated = false, UsedPG = false, UsedPG13 = false, UsedR = false, UsedUnknown = false, UsedUnrated = false;
 
+            var UsedRatings = from Movie in MovieLoader.AllMovies
+                              group Movie by Movie.Rating into g
+                              select g;
+            foreach (var Item in UsedRatings)
+            {
+                //Console.WriteLine(Item.Key);
+                if (Item.Key == MPAARating.G && UsedG == false)
+                {
+                    UsedG = true;
+                }
+                else if (Item.Key == MPAARating.NC17 && UsedNC17 == false)
+                {
+                    UsedNC17 = true;
+                }
+                else if (Item.Key == MPAARating.NotRated && UsedNotRated == false)
+                {
+                    UsedNotRated = true;
+                }
+                else if (Item.Key == MPAARating.PG && UsedPG == false)
+                {
+                    UsedPG = true;
+                }
+                else if (Item.Key == MPAARating.PG13 && UsedPG13 == false)
+                {
+                    UsedPG13 = true;
+                }
+                else if (Item.Key == MPAARating.R && UsedR == false)
+                {
+                    UsedR = true;
+                }
+                else if (Item.Key == MPAARating.Unknown && UsedUnknown == false)
+                {
+                    UsedUnknown = true;
+                }
+                else if (Item.Key == MPAARating.Unrated && UsedUnrated == false)
+                {
+                    UsedUnrated = true;
+                }
+            }
+
+            if (UsedG != true)
+            {
+                Console.WriteLine("The G Rating is never used.");
+            }
+            if (UsedNC17 != true)
+            {
+                Console.WriteLine("The NC17 Rating is never used.");
+            }
+            if (UsedNotRated != true)
+            {
+                Console.WriteLine("The Not Rated Rating is never used.");
+            }
+            if (UsedPG != true)
+            {
+                Console.WriteLine("The PG Rating is never used.");
+            }
+            if (UsedPG13 != true)
+            {
+                Console.WriteLine("The PG13 Rating is never used.");
+            }
+            if (UsedR != true)
+            {
+                Console.WriteLine("The R Rating is never used.");
+            }
+            if (UsedUnknown != true)
+            {
+                Console.WriteLine("The Unknown Rating is never used.");
+            }
+            if (UsedUnrated != true)
+            {
+                Console.WriteLine("The Unrated Rating is never used.");
+            }
 
             Console.WriteLine("************************************************");
 
             //Display All Films, By rating (Ascending), then seperately by title (Ascending Alphabetically)
+            var RatingList = from Movie in MovieLoader.AllMovies
+                             orderby Movie.Rating ascending
+                             select Movie;
+            var TitleList = from Movie in MovieLoader.AllMovies
+                            orderby Movie.Title descending
+                            select Movie;
 
+            Console.WriteLine("Movies Sorted According to Ratings, Descending");
+            foreach (var Movie in RatingList)
+            {
+                Console.WriteLine($"{Movie.Title}, {Movie.Rating}");
+            }
+            Console.WriteLine("********************************");
+            Console.WriteLine("Movies Sorted According to Titles, Ascending");
+            foreach (var Movie in TitleList)
+            { 
+                Console.WriteLine($"{Movie.Title}, {Movie.Rating}");
+            }
 
             Console.WriteLine("************************************************");
 
             //Group Movies by Number of Words in Title - List by Group with Total
-
+            var TitleLength = from Movie in MovieLoader.AllMovies
+                              group Movie by Movie.Title.Length into g
+                              select g;
+            foreach (var ItemList in TitleLength)
+            {
+                Console.WriteLine($"Group: {ItemList.Key}, Films: {ItemList.Count()}");
+            }
 
             Console.WriteLine("************************************************");
 
             //List Total Films with MPAARating of G, PG, PG-13 = total number
-
+            var KidFriendly = from Movie in MovieLoader.AllMovies
+                              where Movie.Rating == MPAARating.G || Movie.Rating == MPAARating.PG || Movie.Rating == MPAARating.PG13
+                              orderby Movie.Rating ascending
+                              select Movie;
+            Console.WriteLine($"You could watch {KidFriendly.Count()} Movies. They are: ");
+            foreach(var Movie in KidFriendly)
+            {
+                Console.WriteLine($"{Movie.Title}, Rating: {Movie.Rating}");
+            }
 
             Console.WriteLine("************************************************");
 
