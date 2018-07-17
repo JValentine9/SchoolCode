@@ -145,8 +145,70 @@ namespace MovieLINQS
 
             Console.WriteLine("************************************************");
 
-            //Rating, Widest Year Span
+            //Shortest Title, Longest Title
+            var ShortTitle = from Movie in MovieLoader.AllMovies
+                             orderby Movie.Title.Length ascending
+                             select Movie;
+            foreach (var Movie in ShortTitle.Take(1))
+            {
+                Console.WriteLine($"Shortest Title: {Movie.Title}");
+            }
 
+            var LongTitle = from Movie in MovieLoader.AllMovies
+                             orderby Movie.Title.Length descending
+                             select Movie;
+            foreach (var Movie in LongTitle.Take(1))
+            {
+                Console.WriteLine($"Longest Title: {Movie.Title}");
+            }
+
+            Console.WriteLine("************************************************");
+
+            //Rating, Widest Year Span
+            int Distance = 0, LowYear = 0, HighYear = 0, RcrdDist = 0;
+            MPAARating LongBoi = MPAARating.NotRated;
+            var RatingYears = from Movie in MovieLoader.AllMovies
+                              group Movie by Movie.Rating into g
+                              select g;
+            foreach(var Item in RatingYears)
+            {
+                
+                foreach(var Movie in Item)
+                {
+                    if (LowYear == 0 && HighYear == 0)
+                    {
+                        LowYear = Movie.Year;
+                        HighYear = Movie.Year;
+                    }
+                    else if (LowYear == 0)
+                    {
+                        LowYear = Movie.Year;
+                    }
+                    else if (HighYear == 0)
+                    {
+                        HighYear = Movie.Year;
+                    }
+                    else if (Movie.Year > HighYear)
+                    {
+                        HighYear = Movie.Year;
+                    }
+                    else if (Movie.Year < LowYear)
+                    {
+                        LowYear = Movie.Year;
+                    }
+                    
+                    Distance = HighYear - LowYear;
+                
+                    if (Distance > RcrdDist)
+                    {
+                        RcrdDist = Distance;
+                        LongBoi = Item.Key;
+                    }
+                    
+                }
+                
+            }
+            Console.WriteLine($"Rating: {LongBoi}, TimeSoan: {RcrdDist}");
 
             Console.WriteLine("************************************************");
 
