@@ -20,8 +20,9 @@ namespace UnitTest
             }
 
             //Testing the IsPrime method
-            if (15.IsPrime())
+            if (13.IsPrime())
             {
+
                 Console.WriteLine("IsPrime works");
             }
             else
@@ -44,6 +45,9 @@ namespace UnitTest
 
             //testing the Shift method
             Console.WriteLine(test.Shift(3));
+
+            Console.Write("Press any key to return...");
+            Console.ReadLine();
         }
     }
 }

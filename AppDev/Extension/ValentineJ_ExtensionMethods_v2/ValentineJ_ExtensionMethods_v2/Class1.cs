@@ -118,9 +118,28 @@ namespace ExtMethods
         /// <param name="input">The string being shifted</param>
         /// <param name="ShiftValue">The amount the string is to shift</param>
         /// <returns>Returns the newly shifted string</returns>
-        public static String Shift(this String input, int ShiftValue)
+        public static string Shift(this String input, int ShiftValue)
         {
-            return input.Substring(ShiftValue, input.Length - 1) + input.Substring(0, ShiftValue - 1);
+            var s = input.ToCharArray();
+            int NewVal;
+            string output;
+
+            for(int i = 0; i < s.Length; i++)
+            {
+                NewVal = (s[i] + ShiftValue);
+                if (NewVal > 127)
+                {
+                    NewVal -= 96;
+                    s[i] = (char)NewVal;
+                }
+                else
+                {
+                    s[i] = (char)NewVal;
+                }
+            }
+            output = string.Join("", s);
+            return output;
+
         }
     }
 }
