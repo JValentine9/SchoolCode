@@ -10,25 +10,25 @@
 
     <StackPanel x:Name="top">
         <Rectangle Fill="Red" Width="auto" Height="50" Margin="5" />
-        <Rectangle Fill="Blue" Width="6*" Height="50" Margin="5" />
-        <Rectangle Fill="Green" Width="60*" Height="50" Margin="5" />
+        <Rectangle Fill="Blue" Width="6" Height="50" Margin="5" />
+        <Rectangle Fill="Green" Width="60" Height="50" Margin="5" />
         <Rectangle Fill="Purple" Width="50" Height="50" Margin="5" />
         <StackPanel x:Name="bottom" Spacing="-60">
             <Rectangle Fill="Red" Width="auto" Height="50" Margin="5" />
-            <Rectangle Fill="Blue" Width="6*" Height="50" Margin="5" Opacity="123"/>
+            <Rectangle Fill="Blue" Width="6" Height="50" Margin="5" Opacity="123"/>
             <StackPanel x:Name="middle" Orientation="Horizontal">
                 <StackPanel x:Name="Bobby the Happy Penguin">
                     <Rectangle Fill="Red" Width="auto" Height="50" Margin="5" />
-                    <Rectangle Fill="Blue" Width="6*" Height="50" Margin="5" />
-                    <Rectangle Fill="Green" Width="60*" Height="50" Margin="5" />
+                    <Rectangle Fill="Blue" Width="6" Height="50" Margin="5" />
+                    <Rectangle Fill="Green" Width="60" Height="50" Margin="5" />
                     <Rectangle Fill="Purple" Width="50" Height="50" Margin="5" />
                 </StackPanel>
                 <Rectangle Fill="Red" Width="898" Height="50" Margin="5" />
-                <Rectangle Fill="Blue" Width="6*" Height="50" Margin="5" />
-                <Rectangle Fill="Green" Width="60*" Height="50" Margin="5" />
+                <Rectangle Fill="Blue" Width="6" Height="50" Margin="5" />
+                <Rectangle Fill="Green" Width="60" Height="50" Margin="5" />
                 <Rectangle Fill="Purple" Width="50" Height="50" Margin="5" />
             </StackPanel>
-            <Rectangle Fill="Green" Width="60*" Height="50" Margin="5" />
+            <Rectangle Fill="Green" Width="60" Height="50" Margin="5" />
             <Rectangle Fill="Purple" Width="50" Height="50" Margin="5" />
         </StackPanel>
         <Rectangle Fill="Aqua" Width="50" Height="50" Margin="5"/>
