@@ -1,0 +1,37 @@
+﻿<Page
+    x:Class="StackPanelDemo.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:StackPanelDemo"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel x:Name="top">
+        <Rectangle Fill="Red" Width="auto" Height="50" Margin="5" />
+        <Rectangle Fill="Blue" Width="6*" Height="50" Margin="5" />
+        <Rectangle Fill="Green" Width="60*" Height="50" Margin="5" />
+        <Rectangle Fill="Purple" Width="50" Height="50" Margin="5" />
+        <StackPanel x:Name="bottom" Spacing="-60">
+            <Rectangle Fill="Red" Width="auto" Height="50" Margin="5" />
+            <Rectangle Fill="Blue" Width="6*" Height="50" Margin="5" Opacity="123"/>
+            <StackPanel x:Name="middle" Orientation="Horizontal">
+                <StackPanel x:Name="Bobby the Happy Penguin">
+                    <Rectangle Fill="Red" Width="auto" Height="50" Margin="5" />
+                    <Rectangle Fill="Blue" Width="6*" Height="50" Margin="5" />
+                    <Rectangle Fill="Green" Width="60*" Height="50" Margin="5" />
+                    <Rectangle Fill="Purple" Width="50" Height="50" Margin="5" />
+                </StackPanel>
+                <Rectangle Fill="Red" Width="898" Height="50" Margin="5" />
+                <Rectangle Fill="Blue" Width="6*" Height="50" Margin="5" />
+                <Rectangle Fill="Green" Width="60*" Height="50" Margin="5" />
+                <Rectangle Fill="Purple" Width="50" Height="50" Margin="5" />
+            </StackPanel>
+            <Rectangle Fill="Green" Width="60*" Height="50" Margin="5" />
+            <Rectangle Fill="Purple" Width="50" Height="50" Margin="5" />
+        </StackPanel>
+        <Rectangle Fill="Aqua" Width="50" Height="50" Margin="5"/>
+    </StackPanel>
+    
+</Page>

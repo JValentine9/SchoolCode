@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValentineJ_OverloadingOperators", "ValentineJ_OverloadingOperators\ValentineJ_OverloadingOperators.csproj", "{431E06F9-5C06-461C-9A27-0738C1BE57D9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{431E06F9-5C06-461C-9A27-0738C1BE57D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{431E06F9-5C06-461C-9A27-0738C1BE57D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{431E06F9-5C06-461C-9A27-0738C1BE57D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{431E06F9-5C06-461C-9A27-0738C1BE57D9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BCAD9FCB-51EB-4EC5-B579-1B482F07563C}
+	EndGlobalSection
+EndGlobal
