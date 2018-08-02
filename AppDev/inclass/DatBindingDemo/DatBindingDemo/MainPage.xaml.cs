@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatBindingDemo.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -30,9 +31,18 @@ namespace DatBindingDemo
          *      Set the ElementName property of the DataBinding object
          * 2) A Path
          *      This refers to the property of the source object (or the entire source itself)
-         *      
-         * 3)
+         * 3) A Mode
+         *      Determines the Modality Binding
         */
+
+        private Dragons sourceDragon = new Dragons()
+        {
+            Name = "Toothless",
+            Age = 17,
+            CanFly = true,
+            ScaleColor = "NightFury Black"
+        };
+
         public MainPage()
         {
             this.InitializeComponent();
