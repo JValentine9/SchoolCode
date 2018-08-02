@@ -23,6 +23,14 @@ namespace DatBindingDemo
     /// </summary>
     public sealed partial class MainPage : Page
     {
+
+        private readonly int readOnlyNum = GenNum();
+        private const int sonctNum = 7;
+
+        private static int GenNum()
+        {
+            return -13;
+        }
         /*
          * Data Binding needs 3 things
          * 1) A Source
@@ -46,6 +54,17 @@ namespace DatBindingDemo
         public MainPage()
         {
             this.InitializeComponent();
+            this.DataContext = sourceDragon;
+
+            //Binding newBinding = new Binding();
+            //newBinding.Source = sourceDragon;
+            //newBinding.Path = new PropertyPath("Name");
+            //newBinding.Mode = BindingMode.TwoWay;
+
+
+            //NameTextBox.SetBinding(TextBox.TextProperty, newBinding);
+
+            //AgeTextBox.DataContext = sourceDragon;
         }
     }
 }

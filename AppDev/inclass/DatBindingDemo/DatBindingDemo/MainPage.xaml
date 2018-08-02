@@ -12,8 +12,17 @@
         <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Name: "/>
-                <TextBox Width="150"
-                         Margin="20 0"/>
+                <TextBox x:Name="NameTextBox"
+                    Width="150"
+                    Margin="20 0"
+                    Text="{Binding Path=Name, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Age: "/>
+                <TextBox x:Name="AgeTextBox"
+                    Width="150"
+                    Margin="20 0"
+                    Text="{Binding Path=Name, Mode=TwoWay}"/>
             </StackPanel>
         </StackPanel>
     </Viewbox>
