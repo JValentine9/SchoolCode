@@ -24,9 +24,9 @@ namespace DatBindingDemo
     public sealed partial class MainPage : Page
     {
 
-        private readonly int readOnlyNum = GenNum();
-        private const int sonctNum = 7;
-
+        //private readonly int readOnlyNum = GenNum();
+        //private const int sonctNum = 7;
+        /*
         private static int GenNum()
         {
             return -13;
@@ -42,8 +42,8 @@ namespace DatBindingDemo
          * 3) A Mode
          *      Determines the Modality Binding
         */
-
-        private Dragons sourceDragon = new Dragons()
+       
+        private Dragon sourceDragon = new Dragon()
         {
             Name = "Toothless",
             Age = 17,

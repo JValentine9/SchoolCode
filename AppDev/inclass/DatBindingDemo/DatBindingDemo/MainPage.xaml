@@ -16,13 +16,32 @@
                     Width="150"
                     Margin="20 0"
                     Text="{Binding Path=Name, Mode=TwoWay}"/>
+                <TextBlock x:Name="NameOutput" Text="{Binding Path=Name, Mode=TwoWay}"
+                           />
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Age: "/>
                 <TextBox x:Name="AgeTextBox"
                     Width="150"
                     Margin="20 0"
-                    Text="{Binding Path=Name, Mode=TwoWay}"/>
+                    Text="{Binding Path=Age, Mode=TwoWay}"/>
+                <TextBlock x:Name="AgeOutput" Text="{Binding Path=Age, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Scale Color: "/>
+                <TextBox x:Name="ColorTextBox"
+                    Width="150"
+                    Margin="20 0"
+                    Text="{Binding Path=ScaleColor, Mode=TwoWay}"/>
+                <TextBlock x:Name="ColorOutput" Text="{Binding Path=ScaleColor, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Flight?: "/>
+                <TextBox x:Name="FlightTextBox"
+                    Width="150"
+                    Margin="20 0"
+                    Text="{Binding Path=CanFly, Mode=TwoWay}"/>
+                <TextBlock x:Name="FlightOutput" Text="{Binding Path=CanFly, Mode=TwoWay}"/>
             </StackPanel>
         </StackPanel>
     </Viewbox>
