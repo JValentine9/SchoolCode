@@ -30,6 +30,7 @@ namespace ValentineJ_Conway
         private int Columns;
         private double WaitTime;
         private Cell[,] myCells;
+        private Random rng = new Random();
 
         BoolToBrushConverter con = new BoolToBrushConverter();
 
@@ -56,12 +57,6 @@ namespace ValentineJ_Conway
                 CreateGrid();
             }
 
-            //FirstGen();
-        }
-
-        private void FirstGen()
-        {
-            throw new NotImplementedException();
         }
 
         private void CreateGrid()
@@ -89,7 +84,8 @@ namespace ValentineJ_Conway
                     Cell.SetBinding(Button.BackgroundProperty, b);
 
                     PlayArea.Children.Add(Cell);
-                    
+                    Grid.SetColumn(Cell, y);
+                    Grid.SetRow(Cell, x);
                 }
             }
         }
@@ -110,7 +106,7 @@ namespace ValentineJ_Conway
 
         private void RandPop_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void PlayBall_Click(object sender, RoutedEventArgs e)
@@ -126,6 +122,20 @@ namespace ValentineJ_Conway
         private void nextGen()
         {
             //foreach()
+        }
+
+        private void OnTheFifthDayHeBreathedLife()
+        {
+            for (int x = 0; x < Rows; x++)
+            {
+                for (int y = 0; y < Columns; y++)
+                {
+                    if ((rng.Next(0,1)) == 1)
+                    {
+
+                    }
+                }
+            }
         }
     }
 
