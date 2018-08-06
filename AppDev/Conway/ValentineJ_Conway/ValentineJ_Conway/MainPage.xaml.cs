@@ -29,6 +29,7 @@ namespace ValentineJ_Conway
         private int Rows;
         private int Columns;
         private double WaitTime;
+        private Cell[,] myCells;
 
         BoolToBrushConverter con = new BoolToBrushConverter();
 
@@ -65,11 +66,15 @@ namespace ValentineJ_Conway
 
         private void CreateGrid()
         {
+            PlayArea.Height = Rows;
+            PlayArea.Width = Columns;
+            myCells = new Cell[Rows, Columns];
             for (int x = 0; x < Rows; x++)
             {
                 for (int y = 0; y < Columns; y++)
                 {
                     Cell cell = new Cell();
+                    myCells[x, y] = cell;
                     Button Cell = new Button();
                     Cell.AddHandler(TappedEvent, new TappedEventHandler(flipcell), true);
                     Cell.DataContext = cell;
@@ -84,10 +89,7 @@ namespace ValentineJ_Conway
                     Cell.SetBinding(Button.BackgroundProperty, b);
 
                     PlayArea.Children.Add(Cell);
-                    Grid.SetColumn(Cell, y);
-                    Grid.SetRow(Cell, x);
-
-                    Popup p = new Popup();
+                    
                 }
             }
         }
