@@ -1,7 +1,7 @@
 ﻿<Application
-    x:Class="Conway_sGoL.App"
+    x:Class="ValueConverterDemo.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Conway_sGoL">
+    xmlns:local="using:ValueConverterDemo">
 
 </Application>

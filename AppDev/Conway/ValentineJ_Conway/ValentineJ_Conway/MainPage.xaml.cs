@@ -15,16 +15,23 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace Conway_sGoL
+namespace ValentineJ_Conway
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private int Rows;
+        private int Columns;
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void Input_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
