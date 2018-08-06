@@ -31,7 +31,17 @@
                     Background="Yellow" Click="Input_Click"/>
             <Button x:Name="NextGen"
                     Content="Next Generation"
-                    Background="Yellow"/>
+                    Background="Yellow" Click="NextGen_Click"/>
+            <Button x:Name="PlayBall"
+                    Content="Play"
+                    Background="Yellow" Click="PlayBall_Click"/>
+            <Slider x:Name="WaitSlider" 
+                    Header="Wait" 
+                    Width="200"
+                    ValueChanged="Slider_ValueChanged"/>
+            <Button x:Name="RandPop"
+                    Content="Populate Randomly"
+                    Background="Yellow" Click="RandPop_Click"/>
             <TextBlock x:Name="ErrorBox" Text=""/>
         </StackPanel>
 

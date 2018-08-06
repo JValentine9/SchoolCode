@@ -28,6 +28,8 @@ namespace ValentineJ_Conway
     {
         private int Rows;
         private int Columns;
+        private double WaitTime;
+
         BoolToBrushConverter con = new BoolToBrushConverter();
 
         public MainPage()
@@ -89,5 +91,29 @@ namespace ValentineJ_Conway
             var model = (Cell)((FrameworkElement)sender).DataContext;
             model.Toggle();
         }
+        private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            Slider slider = sender as Slider;
+            if (slider != null)
+            {
+                WaitTime = slider.Value;
+            }
+        }
+
+        private void RandPop_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PlayBall_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NextGen_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
+
 }
