@@ -70,18 +70,24 @@ namespace ValentineJ_Conway
                 for (int y = 0; y < Columns; y++)
                 {
                     Cell cell = new Cell();
-                    Rectangle rect = new Rectangle();
-                    rect.AddHandler(TappedEvent, new TappedEventHandler(flipcell), true);
-                    rect.DataContext = cell;
+                    Button Cell = new Button();
+                    Cell.AddHandler(TappedEvent, new TappedEventHandler(flipcell), true);
+                    Cell.DataContext = cell;
+                    Cell.Height = 50;
+                    Cell.Width = 50;
+                    Cell.BorderBrush = new SolidColorBrush(Colors.Black);
+                    Cell.BorderThickness = new Thickness(2);
                     Binding b = new Binding();
                     b.Path = new PropertyPath("IsLive");
                     b.Mode = BindingMode.OneWay;
                     b.Converter = con;
-                    rect.SetBinding(Shape.FillProperty, b);
+                    Cell.SetBinding(Button.BackgroundProperty, b);
 
-                    PlayArea.Children.Add(rect);
-                    Grid.SetColumn(rect, y);
-                    Grid.SetRow(rect, x);
+                    PlayArea.Children.Add(Cell);
+                    Grid.SetColumn(Cell, y);
+                    Grid.SetRow(Cell, x);
+
+                    Popup p = new Popup();
                 }
             }
         }
@@ -113,6 +119,11 @@ namespace ValentineJ_Conway
         private void NextGen_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void nextGen()
+        {
+            //foreach()
         }
     }
 
