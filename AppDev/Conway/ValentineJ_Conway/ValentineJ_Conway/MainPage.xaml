@@ -13,18 +13,26 @@
             <ColumnDefinition Width="80*" />
             <ColumnDefinition Width="20*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
+        <Grid x:Name="PlayArea" 
+              Grid.Column="0"
+              Margin="10">
             
         </Grid>
         <StackPanel Grid.Column="1" 
-                    Background="Purple">
+                    Background="Wheat">
+            <TextBlock Text="Rows"/>
             <TextBox x:Name="RowInput"
-                     Text="Rows"/>
+                     Text=""/>
+            <TextBlock Text="Columns"/>
             <TextBox x:Name="ColumnInput"
-                     Text="Columns"/>
+                     Text=""/>
             <Button x:Name="Input"
                     Content="Build"
                     Background="Yellow" Click="Input_Click"/>
+            <Button x:Name="NextGen"
+                    Content="Next Generation"
+                    Background="Yellow"/>
+            <TextBlock x:Name="ErrorBox" Text=""/>
         </StackPanel>
 
     </Grid>
