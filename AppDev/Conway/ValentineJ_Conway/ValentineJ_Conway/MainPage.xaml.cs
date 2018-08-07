@@ -39,6 +39,11 @@ namespace ValentineJ_Conway
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// On the input click, creates a grid based on the incoming info
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Input_Click(object sender, RoutedEventArgs e)
         {
             Rows = int.Parse(RowInput.Text);
@@ -59,19 +64,35 @@ namespace ValentineJ_Conway
 
         }
 
+        /// <summary>
+        /// Creates the playgrid and the codebehind MyCell to dimensional grid
+        /// </summary>
         private void CreateGrid()
+
         {
-            PlayArea.Height = Rows;
-            PlayArea.Width = Columns;
+            PlayArea.Children.Clear();
+            //PlayArea.Height = Rows;
+            //PlayArea.Width = Columns;
             myCells = new Cell[Rows, Columns];
             for (int x = 0; x < Rows; x++)
             {
+                PlayArea.RowDefinitions.Add(new RowDefinition());
+            }
+            for (int y=0; y < Columns; y++)
+            {
+                PlayArea.ColumnDefinitions.Add(new ColumnDefinition());
+            }
+            for (int x = 0; x < Rows; x++)
+            {
+                
                 for (int y = 0; y < Columns; y++)
                 {
+                    
                     Cell cell = new Cell();
                     myCells[x, y] = cell;
                     Button Cell = new Button();
-                    Cell.AddHandler(TappedEvent, new TappedEventHandler(flipcell), true);
+                    Cell.Tapped += flipcell;
+                    //Cell.AddHandler(TappedEvent, new TappedEventHandler(flipcell), true);
                     Cell.DataContext = cell;
                     Cell.Height = 50;
                     Cell.Width = 50;
@@ -90,11 +111,22 @@ namespace ValentineJ_Conway
             }
         }
 
+        /// <summary>
+        /// Flips the statee of any given cell
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void flipcell(object sender, TappedRoutedEventArgs e)
         {
-            var model = (Cell)((FrameworkElement)sender).DataContext;
-            model.Toggle();
+            var model = (sender as Button).DataContext;
+            //model.Toggle();
         }
+
+        /// <summary>
+        /// Takes in the new position of the slider
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             Slider slider = sender as Slider;
@@ -104,26 +136,53 @@ namespace ValentineJ_Conway
             }
         }
 
+        /// <summary>
+        /// On clicking the random population button, Randomly generates living cells
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RandPop_Click(object sender, RoutedEventArgs e)
         {
-            
+            OnTheFifthDayHeBreathedLife();
         }
 
+        /// <summary>
+        /// sets the population to randomly advance generations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PlayBall_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// On clicking the next button, runs nextGen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NextGen_Click(object sender, RoutedEventArgs e)
         {
-
+            nextGen();
         }
 
+        /// <summary>
+        /// Steps through to the next generation
+        /// </summary>
         private void nextGen()
         {
-            //foreach()
+            for (int x = 0; x < Rows; x++)
+            {
+                for (int y = 0; y < Columns; y++)
+                {
+                    //logicboi
+                }
+            }
         }
 
+        /// <summary>
+        /// Randomly sets cells to be living or dead
+        /// </summary>
         private void OnTheFifthDayHeBreathedLife()
         {
             for (int x = 0; x < Rows; x++)
@@ -132,7 +191,7 @@ namespace ValentineJ_Conway
                 {
                     if ((rng.Next(0,1)) == 1)
                     {
-
+                        myCells[x, y].IsLive = true;
                     }
                 }
             }

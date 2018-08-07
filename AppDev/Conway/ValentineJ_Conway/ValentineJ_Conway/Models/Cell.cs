@@ -13,6 +13,7 @@ namespace ValentineJ_Conway.Models
         public event PropertyChangedEventHandler PropertyChanged;
 
         private bool isLive;
+        private int livingNeighbors = 0;
 
         public bool IsLive
         {
@@ -20,6 +21,16 @@ namespace ValentineJ_Conway.Models
             set
             {
                 isLive = value;
+                FieldChanged();
+            }
+        }
+
+        public int LivingNeighbors
+        {
+            get { return livingNeighbors; }
+            set
+            {
+                livingNeighbors = value;
                 FieldChanged();
             }
         }
@@ -32,6 +43,18 @@ namespace ValentineJ_Conway.Models
         public void FieldChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public void CanILive()
+        {
+            if (livingNeighbors < 2 || livingNeighbors > 3)
+            {
+                isLive = false;
+            }
+            else if (livingNeighbors == 3)
+            {
+                isLive = true;
+            }
         }
     }
 }
