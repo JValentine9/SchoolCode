@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ValentineJ_Conway.Models
 {
-    class Cell
+    class Cell : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

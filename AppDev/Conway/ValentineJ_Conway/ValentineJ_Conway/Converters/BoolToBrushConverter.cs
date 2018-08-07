@@ -11,8 +11,8 @@ namespace ValentineJ_Conway.Converters
 {
         public class BoolToBrushConverter : IValueConverter
         {
-            private static SolidColorBrush live = new SolidColorBrush(Colors.Green);
-            private static SolidColorBrush dead = new SolidColorBrush(Colors.Red);
+            public static SolidColorBrush live = new SolidColorBrush(Colors.Green);
+            public static SolidColorBrush dead = new SolidColorBrush(Colors.Red);
 
             public object Convert(object value, Type targetType, object parameter, string language)
             {

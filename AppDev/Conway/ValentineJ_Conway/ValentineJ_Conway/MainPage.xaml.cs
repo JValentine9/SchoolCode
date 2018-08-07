@@ -98,10 +98,12 @@ namespace ValentineJ_Conway
                     Cell.Width = 50;
                     Cell.BorderBrush = new SolidColorBrush(Colors.Black);
                     Cell.BorderThickness = new Thickness(2);
-                    Binding b = new Binding();
-                    b.Path = new PropertyPath("IsLive");
-                    b.Mode = BindingMode.OneWay;
-                    b.Converter = con;
+                    Binding b = new Binding
+                    {
+                        Path = new PropertyPath("IsLive"),
+                        Mode = BindingMode.OneWay,
+                        Converter = con
+                    };
                     Cell.SetBinding(Button.BackgroundProperty, b);
 
                     PlayArea.Children.Add(Cell);
@@ -118,8 +120,9 @@ namespace ValentineJ_Conway
         /// <param name="e"></param>
         private void flipcell(object sender, TappedRoutedEventArgs e)
         {
-            var model = (sender as Button).DataContext;
+            //var model = (sender as Button).DataContext;
             //model.Toggle();
+            myCells[Grid.GetRow((Button)sender), Grid.GetColumn((Button)sender)].Toggle();
         }
 
         /// <summary>
