@@ -35,6 +35,9 @@
             <Button x:Name="PlayBall"
                     Content="Play"
                     Background="Yellow" Click="PlayBall_Click"/>
+            <Button x:Name="Pause"
+                    Content="Pause"
+                    Background="Yellow" Click="Pause_Click"/>
             <Slider x:Name="WaitSlider" 
                     Header="Wait" 
                     Width="200"

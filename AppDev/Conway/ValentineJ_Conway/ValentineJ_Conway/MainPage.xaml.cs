@@ -16,6 +16,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
+using System.Threading;
+using System.Threading.Tasks;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -31,6 +33,7 @@ namespace ValentineJ_Conway
         private double WaitTime;
         private Cell[,] myCells;
         private Random rng = new Random();
+        private bool Play = false;
 
         BoolToBrushConverter con = new BoolToBrushConverter();
 
@@ -146,7 +149,16 @@ namespace ValentineJ_Conway
         /// <param name="e"></param>
         private void RandPop_Click(object sender, RoutedEventArgs e)
         {
-            OnTheFifthDayHeBreathedLife();
+            for (int x = 0; x < Rows; x++)
+            {
+                for (int y = 0; y < Columns; y++)
+                {
+                    if ((rng.Next(0, 2)) == 1)
+                    {
+                        myCells[x, y].IsLive = true;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -156,7 +168,12 @@ namespace ValentineJ_Conway
         /// <param name="e"></param>
         private void PlayBall_Click(object sender, RoutedEventArgs e)
         {
-
+            Play = true;
+            do
+            {
+                nextGen();
+                Task.Delay(TimeSpan.FromSeconds(WaitTime));
+            } while (Play);
         }
 
         /// <summary>
@@ -178,26 +195,259 @@ namespace ValentineJ_Conway
             {
                 for (int y = 0; y < Columns; y++)
                 {
-                    //logicboi
+                    myCells[x, y].LivingNeighbors = 0;
+                    //upper left
+                    if (x == 0 && y == 0)
+                    {
+                        //Down to the Right
+                        if (myCells[(x + 1), (y + 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        ////Down
+                        if (myCells[(x), (y + 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //To the Right
+                        if (myCells[(x + 1), (y)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                    }
+                    //Bottom Right
+                    else if (x == (myCells.GetLength(0)-1) && y == (myCells.GetLength(1) -1))
+                    {
+                        //Up to the Left
+                        if (myCells[(x - 1), (y - 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        ////Up
+                        if (myCells[(x), (y - 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //To the Left
+                        if (myCells[(x - 1), (y)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                    }
+                    //Top Right
+                    else if (x == (myCells.GetLength(0) -1) && y == 0)
+                    {
+                        //Down to the Left
+                        if (myCells[(x - 1), (y + 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        ////Down
+                        if (myCells[(x), (y + 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //To the Left
+                        if (myCells[(x - 1), (y)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                    }
+                    //Bottom Left
+                    else if (x == 0 && y == (myCells.GetLength(1) -1))
+                    {
+                        //Up to the Right
+                        if (myCells[(x + 1), (y - 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        ////Up
+                        if (myCells[(x), (y - 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //To the Right
+                        if (myCells[(x + 1), (y)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+
+                    }
+                    //The Left
+                    else if (x == 0)
+                    {
+                        //Up to the Right
+                        if (myCells[(x + 1), (y - 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        ////Up
+                        if (myCells[(x), (y - 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //To the Right
+                        if (myCells[(x + 1), (y)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //Down to the Right
+                        if (myCells[(x + 1), (y + 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //Down
+                        if (myCells[(x), (y + 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                    }
+                    //The Right
+                    else if (x == (myCells.GetLength(0) -1))
+                    {
+                        //Up to the Left
+                        if (myCells[(x - 1), (y - 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        ////Up
+                        if (myCells[(x), (y - 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //To the Left
+                        if (myCells[(x - 1), (y)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //Down to the Left
+                        if (myCells[(x - 1), (y + 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //Down
+                        if (myCells[(x), (y + 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                    }
+                    //The Top
+                    else if (y == 0)
+                    {
+                        //To the Left
+                        if (myCells[(x - 1), (y)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //Down to the Left
+                        if (myCells[(x - 1), (y + 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //Down
+                        if (myCells[(x), (y + 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //Down to the Right
+                        if (myCells[(x + 1), (y + 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //To the Right
+                        if (myCells[(x + 1), (y)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                    }
+                    //The Bottom
+                    //The Right
+                    else if (y == (myCells.GetLength(1) -1))
+                    {
+                        //Up to the Left
+                        if (myCells[(x - 1), (y - 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        ////Up
+                        if (myCells[(x), (y - 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //To the Left
+                        if (myCells[(x - 1), (y)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //Up to the Right
+                        if (myCells[(x + 1), (y - 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //To the Right
+                        if (myCells[(x + 1), (y)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                    }
+                    //Generic
+                    else
+                    {
+                        //Up to the Right
+                        if (myCells[(x + 1), (y - 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        ////Up
+                        if (myCells[(x), (y - 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //Up to the Left
+                        if (myCells[(x - 1), (y - 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //To the Right
+                        if (myCells[(x + 1), (y)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //Down to the Left
+                        if (myCells[(x - 1), (y + 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //Down
+                        if (myCells[(x), (y + 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //To the Left
+                        if (myCells[(x - 1), (y)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                        //Down to the Right
+                        if (myCells[(x + 1), (y + 1)].IsLive)
+                        {
+                            myCells[x, y].LivingNeighbors++;
+                        }
+                    }
                 }
             }
-        }
-
-        /// <summary>
-        /// Randomly sets cells to be living or dead
-        /// </summary>
-        private void OnTheFifthDayHeBreathedLife()
-        {
             for (int x = 0; x < Rows; x++)
             {
                 for (int y = 0; y < Columns; y++)
                 {
-                    if ((rng.Next(0,1)) == 1)
-                    {
-                        myCells[x, y].IsLive = true;
-                    }
+                    myCells[x, y].CanILive();
                 }
             }
+        }
+
+        private void Pause_Click(object sender, RoutedEventArgs e)
+        {
+            Play = false;
         }
     }
 
