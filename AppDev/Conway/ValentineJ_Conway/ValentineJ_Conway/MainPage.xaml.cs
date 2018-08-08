@@ -34,12 +34,20 @@ namespace ValentineJ_Conway
         private Cell[,] myCells;
         private Random rng = new Random();
         private bool Play = false;
+        private DispatcherTimer time = new DispatcherTimer();
 
         BoolToBrushConverter con = new BoolToBrushConverter();
 
         public MainPage()
         {
             this.InitializeComponent();
+            time.Tick += Time_Tick;
+            time.Interval = new TimeSpan(100000/((long)WaitTime +1));
+        }
+
+        private void Time_Tick(object sender, object e)
+        {
+            nextGen();
         }
 
         /// <summary>
@@ -139,6 +147,9 @@ namespace ValentineJ_Conway
             if (slider != null)
             {
                 WaitTime = slider.Value;
+                time.Stop();
+                time.Interval = new TimeSpan(100000 / ((long)WaitTime + 1));
+                time.Start();
             }
         }
 
@@ -168,12 +179,8 @@ namespace ValentineJ_Conway
         /// <param name="e"></param>
         private void PlayBall_Click(object sender, RoutedEventArgs e)
         {
-            Play = true;
-            do
-            {
-                nextGen();
-                Task.Delay(TimeSpan.FromSeconds(WaitTime));
-            } while (Play);
+            
+            time.Start();
         }
 
         /// <summary>
@@ -447,7 +454,7 @@ namespace ValentineJ_Conway
 
         private void Pause_Click(object sender, RoutedEventArgs e)
         {
-            Play = false;
+            time.Stop();
         }
     }
 
