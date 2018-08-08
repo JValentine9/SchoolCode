@@ -49,11 +49,11 @@ namespace ValentineJ_Conway.Models
         {
             if (livingNeighbors < 2 || livingNeighbors > 3)
             {
-                isLive = false;
+                IsLive = false;
             }
             else if (livingNeighbors == 3)
             {
-                isLive = true;
+                IsLive = true;
             }
         }
     }
