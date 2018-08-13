@@ -1,0 +1,26 @@
+﻿<Page
+    x:Class="Contact_Manager.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Contact_Manager"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Column="1" Grid.Row="0" x:Name="AddContact" Content="Add Contact" HorizontalAlignment="Center" Width="200" Height="100" FontSize="32"/>
+        <TextBlock Grid.Column="0" Grid.Row="0" Text="Contacts" FontSize="128"/>
+        <StackPanel x:Name="ContactList" Grid.Column="0" Grid.Row="1">
+            
+        </StackPanel>
+    </Grid>
+</Page>
