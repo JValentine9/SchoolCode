@@ -11,5 +11,10 @@ namespace Contact_Manager.Models
     {
         public string Address { get; set; }
         public EmailType Type { get; set; }
+
+        public override string ToString()
+        {
+            return $"Email Address: {Address}, {Type}"; 
+        }
     }
 }

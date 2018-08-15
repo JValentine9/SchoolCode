@@ -9,7 +9,12 @@ namespace Contact_Manager.Models
     enum PhoneType {Work, Personal, Home };
     class PhoneNumber
     {
-        public int Number { get; set; }
+        public string Number { get; set; }
         public PhoneType Type { get; set; }
+
+        public override string ToString()
+        {
+            return $"Phone Number: {Number}, {Type}";
+        }
     }
 }

@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Background="Cornsilk">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="2*" />
@@ -34,7 +34,9 @@
         <ListView Grid.Column="0"
                   Grid.Row="1"
                   x:Name="ContactsListView"
-                  Margin="30">
+                  Margin="30"
+                  SelectionChanged="DisplayContact"
+                  Background="Aquamarine">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -48,35 +50,36 @@
         <StackPanel x:Name="SaveLoad"
                     Grid.Column="2"
                     Grid.Row="1">
-            <Button x:Name="Save" 
+            <Button x:Name="StartSave" 
                     Content="Save" 
                     HorizontalAlignment="Center" 
                     Width="200" 
                     Height="100" 
                     FontSize="32"
-                    Margin="20 20"/>
+                    Margin="20 20" Click="Save_Click"/>
             <Button x:Name="SaveAs" 
                     Content="Save As" 
                     HorizontalAlignment="Center" 
                     Width="200" 
                     Height="100" 
                     FontSize="32"
-                    Margin="20 20"/>
+                    Margin="20 20" Click="SaveAs_Click"/>
             <Button x:Name="Open" 
                     Content="Open" 
                     HorizontalAlignment="Center" 
                     Width="200" 
                     Height="100" 
                     FontSize="32"
-                    Margin="20 20"/>
+                    Margin="20 20" Click="Open_Click"/>
         </StackPanel>
+        <TextBlock x:Name="ContactDisplay"
+                   Grid.Row="1"
+                   Grid.Column="1"
+                   Margin="20 30"/>
         <Popup Grid.Column ="1" 
-               VerticalOffset="10" 
-               HorizontalOffset="200" 
                x:Name="AddPopup">
             <Border BorderThickness="2" 
-                    Width="200" 
-                    Height="200">
+                    >
                 <StackPanel HorizontalAlignment="Center" 
                             VerticalAlignment="Center"
                             Padding="30">
@@ -94,6 +97,9 @@
                         <TextBox x:Name="PhoneInput"
                                  HorizontalAlignment="Right"/>
                     </StackPanel>
+                    <ComboBox x:Name="PhoneType"
+                              Header="Phone Type"
+                              ItemsSource="{x:Bind pTypes}"/>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Email: "
                                    HorizontalAlignment="Left"
@@ -101,10 +107,45 @@
                         <TextBox x:Name="EmailInput"
                                  HorizontalAlignment="Right"/>
                     </StackPanel>
+                    <ComboBox x:Name="EmailType"
+                              Header="Email Type"
+                              ItemsSource="{x:Bind eTypes}"/>
                     <Button x:Name="AddAndSave"
                             Content="Finish" 
                             HorizontalAlignment="Center"
                             Click="AddAndSave_Click"/>
+                </StackPanel>
+            </Border>
+        </Popup>
+        <Popup Grid.Column ="1" 
+               x:Name="SaveAsPopup">
+            <Border BorderThickness="2">
+                <StackPanel HorizontalAlignment="Center" 
+                            VerticalAlignment="Center"
+                            Padding="30">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Save to Path: "/>
+                        <TextBox x:Name="SavePathInput"/>
+                    </StackPanel>
+                    <Button x:Name="FinalSave"
+                            Content="Save"
+                            Click="FinalSave_Click"/>
+                </StackPanel>
+            </Border>
+        </Popup>
+        <Popup Grid.Column ="1" 
+               x:Name="OpenPopup">
+            <Border BorderThickness="2">
+                <StackPanel HorizontalAlignment="Center" 
+                            VerticalAlignment="Center"
+                            Padding="30">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Open File: "/>
+                        <TextBox x:Name="OpenPathInput"/>
+                    </StackPanel>
+                    <Button x:Name="OpenFile"
+                            Content="Open"
+                            Click="OpenFile_Click"/>
                 </StackPanel>
             </Border>
         </Popup>
