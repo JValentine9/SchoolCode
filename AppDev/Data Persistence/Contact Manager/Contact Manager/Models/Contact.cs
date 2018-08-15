@@ -10,9 +10,13 @@ namespace Contact_Manager.Models
     [ProtoContract]
     class Contact
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public List<Email> Emails = new List<Email>();
-        public List<PhoneNumber> PhoneNumbers = new List<PhoneNumber>();
+        public string Name { get; set; }
+
+        public PhoneNumber Phone { get; set; }
+
+        public Email EmailAddress { get; set; }
+        //public List<Email> Emails = new List<Email>();
+
+        //public List<PhoneNumber> PhoneNumbers = new List<PhoneNumber>();
     }
 }

@@ -23,9 +23,24 @@ namespace Contact_Manager
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private List<Contact> contacts = new List<Contact>();
+
         public MainPage()
         {
             this.InitializeComponent();
+
+            ContactsListView.ItemsSource = contacts;
+        }
+
+        private void AddContact_Click(object sender, RoutedEventArgs e)
+        {
+            if (!AddPopup.IsOpen) { AddPopup.IsOpen = true; }
+        }
+
+        private void AddAndSave_Click(object sender, RoutedEventArgs e)
+        {
+            //Add New Contact to contacts
+            if (AddPopup.IsOpen) { AddPopup.IsOpen = false; }
         }
     }
 }
