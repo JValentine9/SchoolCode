@@ -8,10 +8,37 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
+    <Grid Background="#9F9CE8">
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Spacing="16">
+            <TextBlock Text="Battleship"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       FontSize="148"/>
+            <TextBlock Text="by Jacob Valentine"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       FontSize="60"/>
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                        Spacing="24">
+                <Button Content="New Game"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        FontSize="36"
+                        Height="100"
+                        Width="250"/>
+                <Button Content="Load Game"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        FontSize="36"
+                        Height="100"
+                        Width="250"/>
+            </StackPanel>
+                        
+
+        </StackPanel>
     </Grid>
 </Page>
