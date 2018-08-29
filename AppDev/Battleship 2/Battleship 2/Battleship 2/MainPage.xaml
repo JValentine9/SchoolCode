@@ -10,8 +10,7 @@
 
     <Grid Background="#9F9CE8">
         <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Spacing="16">
+                    HorizontalAlignment="Center">
             <TextBlock Text="Battleship"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
@@ -22,20 +21,23 @@
                        FontSize="60"/>
             <StackPanel Orientation="Horizontal"
                         VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                        Spacing="24">
+                       HorizontalAlignment="Center">
                 <Button Content="New Game"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
                         FontSize="36"
                         Height="100"
-                        Width="250"/>
+                        Width="250" Click="Button_Click"
+                        BorderThickness="4"
+                        BorderBrush="Black"/>
                 <Button Content="Load Game"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
                         FontSize="36"
                         Height="100"
-                        Width="250"/>
+                        Width="250" Click="Button_Click_1"
+                        BorderThickness="4"
+                        BorderBrush="Black"/>
             </StackPanel>
 
 

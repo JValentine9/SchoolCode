@@ -79,7 +79,7 @@
 
 
         <Popup x:Name="Hit">
-            <TextBlock x:Name="Who Hit What"
+            <TextBlock x:Name="WhoHit"
                       Text="{}"
                       FontSize="24"/>
         </Popup>

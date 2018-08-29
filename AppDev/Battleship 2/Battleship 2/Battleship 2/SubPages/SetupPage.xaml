@@ -24,8 +24,9 @@
                 HorizontalAlignment="Center"
                 Height="125"
                 Width="200"
-                FontSize="48"/>
-        <Grid Grid.Row="0"
+                FontSize="48" Click="Button_Click"/>
+        <Grid x:Name="PlayArea"
+              Grid.Row="0"
               Grid.Column="0"
               Padding="4">
             <Grid.ColumnDefinitions>
@@ -56,6 +57,15 @@
                   Grid.Column="0"/>
 
         </Grid>
-
-        </Grid>
+        <StackPanel Grid.Column="1"
+                    Grid.Row="0"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+            <TextBlock x:Name="SetDisplay"
+                       FontSize ="48"/>
+            <TextBlock x:Name="ErrorBoi"
+                       FontSize ="48"/>
+        </StackPanel>
+        
+    </Grid>
 </Page>
