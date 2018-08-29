@@ -10,11 +10,11 @@ namespace Battleship_2.Models
     {
         public Cell[,] Field = new Cell[10, 10];
 
-        public Ship Battleship = new Ship { Name = "Battleship", Length = 4 };
-        public Ship Carrier = new Ship { Name = "Carrier", Length = 5 };
-        public Ship Cruiser = new Ship { Name = "Cruiser", Length = 3 };
-        public Ship Submarine = new Ship { Name = "Submarine", Length = 3 };
-        public Ship Destroyer = new Ship { Name = "Destroyer", Length = 2 };
+        public Ship Battleship = new Ship { Name = "Battleship", Health = 4};
+        public Ship Carrier = new Ship { Name = "Carrier", Health = 5};
+        public Ship Cruiser = new Ship { Name = "Cruiser", Health = 3 };
+        public Ship Submarine = new Ship { Name = "Submarine", Health = 3 };
+        public Ship Destroyer = new Ship { Name = "Destroyer", Health = 2 };
 
         public bool hasWon;
     }

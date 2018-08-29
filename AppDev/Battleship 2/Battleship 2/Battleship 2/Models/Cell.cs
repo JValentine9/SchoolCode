@@ -10,11 +10,13 @@ namespace Battleship_2.Models
 {
     enum CellState { Water, Ship, Hit, Miss };
 
+
     class Cell : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
         private CellState state;
+        public Ship boundShip;
 
         public CellState State
         {

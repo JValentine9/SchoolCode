@@ -10,14 +10,10 @@ namespace Battleship_2.Models
     {
         public string Name { get; set; }
 
-        public int Length { get; set; }
-
-        public bool IsVertical { get; set; }
-
         public bool IsSunk { get; set; }
 
-        public int Start { get; set; }
+        public bool IsPlaced { get; set; }
 
-        public int End { get; set; }
+        public int Health { get; set; }
     }
 }

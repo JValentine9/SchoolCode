@@ -20,429 +20,389 @@ using Battleship_2.Converters;
 
 namespace Battleship_2.SubPages
 {
+    enum Shiptype { Carrier, Battleship, Cruiser, Submarine, Destroyer};
+
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class SetupPage : Page
     {
-        Game game = new Game();
-        int ShipsToPlace = 5;
-        bool FirstClick = false;
-        int FirstClickX;
-        int FirstClickY;
-        int SecondClickX;
-        int SecondClickY;
+        Game game = new Game(); //Game Object for movement of data
+        int ShipsToPlace = 5; //Remaining Ships to Place for Human
+        int AIShipsToPlace = 5; //Remaining Ships to Place for AI
+        Shiptype slcShip;
+        int x;
+        int y;
+        bool IsValid;
         bool IsVert;
-        ClassStatetoBrushConverter con = new ClassStatetoBrushConverter();
+        ClassStatetoBrushConverter con = new ClassStatetoBrushConverter(); //converter for CellState to Color for the buttons
 
-        public SetupPage()
+        public SetupPage() //Sets up the page
         {
-            this.InitializeComponent();
-            MakeGrid();
+            this.InitializeComponent(); //generates C# code from UWP Xaml document
+            MakeGrid(); //Make the placement grid
 
         }
 
-        private void MakeGrid()
+        private void MakeGrid() //makes the grid for Ship Placement
         {
-            PlayArea.Children.Clear();
-            for (int x = 0; x < 10; x++)
+            //PlayArea.Children.Clear(); //clears the grid, just in case
+            for (int x = 0; x < 10; x++) //looping 10 times x
             {
 
-                for (int y = 0; y < 10; y++)
+                for (int y = 0; y < 10; y++) //looping 10 times y
                 {
 
-                    Cell cell = new Cell();
-                    game.Player1.Field[x, y] = cell;
-                    Button Cell = new Button();
-                    Cell.Tapped += SelectBoi;
-                    Cell.DataContext = cell;
-                    Cell.Height = 50;
-                    Cell.Width = 50;
-                    Cell.BorderBrush = new SolidColorBrush(Colors.Black);
-                    Cell.BorderThickness = new Thickness(2);
-                    Binding b = new Binding
+                    Cell cell = new Cell(); //Creating cell object for binding
+                    game.Player1.Field[x, y] = cell; //placing cell object in Player1's field
+                    Button Cell = new Button(); //creates button
+                    Cell.Tapped += SelectBoi; //adds on tap method SelectBoi
+                    Cell.DataContext = cell; // sets the cell as the datacontext of the button
+                    Cell.Height = 50; // i leik squares
+                    Cell.Width = 50; // i leik squares
+                    Cell.BorderBrush = new SolidColorBrush(Colors.Black); //give some definition
+                    Cell.BorderThickness = new Thickness(2); // more of dat definition
+                    Binding b = new Binding //set binding
                     {
-                        Path = new PropertyPath("State"),
-                        Mode = BindingMode.OneWay,
-                        Converter = con
+                        Path = new PropertyPath("State"), //get that state-based binding for color
+                        Mode = BindingMode.OneWay, // don't want two way communication. Communtication bad
+                        Converter = con //use my converter binding boi
                     };
-                    Cell.SetBinding(Button.BackgroundProperty, b);
+                    Cell.SetBinding(Button.BackgroundProperty, b); //Bind the binding to the bound button of bindingness. bind
 
-                    PlayArea.Children.Add(Cell);
-                    Grid.SetColumn(Cell, y);
-                    Grid.SetRow(Cell, x);
+                    PlayArea.Children.Add(Cell); //make sure the button is in the grid
+                    Grid.SetColumn(Cell, y); // gitcho place boiiiii place on y
+                    Grid.SetRow(Cell, x); //place on x
                 }
             }
         }
 
-        private void SelectBoi(object sender, TappedRoutedEventArgs e)
+        private void SelectBoi(object sender, TappedRoutedEventArgs e) //on button click within the grid, starts trying to place ships in order
         {
-            if (!(ShipsToPlace >= 1))
+            var spot = (Button)sender;
+            y = (int)spot.GetValue(Grid.ColumnProperty);
+            x = (int)spot.GetValue(Grid.RowProperty);
+            switch (slcShip)
             {
-                var ClickedBoi = (Button)sender;
-                FirstClick = !FirstClick;
-                if (FirstClick)
-                {
-                    FirstClickX = (int)ClickedBoi.GetValue(Grid.ColumnProperty);
-                    FirstClickY = (int)ClickedBoi.GetValue(Grid.RowProperty);
-                    game.Player1.Field[Grid.GetRow((Button)sender), Grid.GetColumn((Button)sender)].State = CellState.Ship;
-                }
-                else
-                {
-                    SecondClickX = (int)ClickedBoi.GetValue(Grid.ColumnProperty);
-                    SecondClickY = (int)ClickedBoi.GetValue(Grid.RowProperty);
-                    if (SecondClickX == FirstClickX && SecondClickY == FirstClickY)
+                case Shiptype.Carrier:
+                    if (!game.Player1.Carrier.IsPlaced)
                     {
-                        game.Player1.Field[Grid.GetRow((Button)sender), Grid.GetColumn((Button)sender)].State = CellState.Water;
-                        FirstClick = !FirstClick;
-                    }
-                    else if ((SecondClickX != FirstClickX) ^ (SecondClickX != FirstClickY))
-                    {
-                        if (SecondClickX == FirstClickX)
+                        if (IsVert)
                         {
-                            IsVert = true;
+                            if (!(y + 5 > 10))
+                            {
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    if (!(game.Player1.Field[x, y + i].State == CellState.Ship))
+                                    {
+                                        IsValid = true;
+                                    }
+                                    else
+                                    {
+                                        IsValid = false;
+                                        break;
+                                    }
+
+                                }
+                                if (IsValid)
+                                {
+                                    for (int i = 0; i < 5; i++)
+                                    {
+                                        game.Player1.Field[x, y + i].State = CellState.Ship;
+                                        game.Player1.Field[x, y + i].boundShip = game.Player1.Carrier;
+                                        game.Player1.Carrier.IsPlaced = true;
+                                    }
+                                }
+
+                            }
                         }
                         else
                         {
-                            IsVert = false;
-                        }
-                        switch(ShipsToPlace)
-                        {
-                            case 5: //Carrier 5
-                                if(IsVert)
+                            if (!(x + 5 > 10))
+                            {
+                                for (int i = 0; i < 5; i++)
                                 {
-                                    int length = Math.Abs(SecondClickX - FirstClickX);
-                                    if (length == 5)
+                                    if (!(game.Player1.Field[x + i, y].State == CellState.Ship))
                                     {
-                                        if ((FirstClickX - SecondClickX) < 0)
-                                        {
-                                            for (int i = (SecondClickX - FirstClickX); i < SecondClickX; i++)
-                                            {
-                                                game.Player1.Field[i, FirstClickY].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                            ShipsToPlace--;
-                                        }
-                                        else
-                                        {
-                                            for (int i = (FirstClickX - SecondClickX); i < FirstClickX; i++)
-                                            {
-                                                game.Player1.Field[i, FirstClickY].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                            ShipsToPlace--;
-                                        }
+                                        IsValid = true;
                                     }
                                     else
                                     {
-                                        game.Player1.Field[FirstClickX, FirstClickY].State = CellState.Water;
-                                        FirstClick = !FirstClick;
+                                        IsValid = false;
+                                        break;
                                     }
+
                                 }
-                                else
+                                if (IsValid)
                                 {
-                                    int length = Math.Abs(SecondClickY - FirstClickY);
-                                    if (length == 5)
+                                    for (int i = 0; i < 5; i++)
                                     {
-                                        if ((FirstClickY - SecondClickY) < 0)
-                                        {
-                                            for (int i = (SecondClickY - FirstClickY); i < SecondClickY; i++)
-                                            {
-                                                game.Player1.Field[FirstClickX, i].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                            ShipsToPlace--;
-                                        }
-                                        else
-                                        {
-                                            for (int i = (FirstClickY - SecondClickY); i < FirstClickY; i++)
-                                            {
-                                                game.Player1.Field[FirstClickX, i].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                            ShipsToPlace--;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        game.Player1.Field[FirstClickX, FirstClickY].State = CellState.Water;
-                                        FirstClick = !FirstClick;
+                                        game.Player1.Field[x + i, y].State = CellState.Ship;
+                                        game.Player1.Field[x + i, y].boundShip = game.Player1.Carrier;
+                                        game.Player1.Carrier.IsPlaced = true;
                                     }
                                 }
-                                break;
-                            case 4: //Battleship 4
-                                if (IsVert)
-                                {
-                                    int length = Math.Abs(SecondClickX - FirstClickX);
-                                    if (length == 4)
-                                    {
-                                        if ((FirstClickX - SecondClickX) < 0)
-                                        {
-                                            for (int i = (SecondClickX - FirstClickX); i < SecondClickX; i++)
-                                            {
-                                                game.Player1.Field[i, FirstClickY].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                            ShipsToPlace--;
-                                        }
-                                        else
-                                        {
-                                            for (int i = (FirstClickX - SecondClickX); i < FirstClickX; i++)
-                                            {
-                                                game.Player1.Field[i, FirstClickY].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                            ShipsToPlace--;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        game.Player1.Field[FirstClickX, FirstClickY].State = CellState.Water;
-                                        FirstClick = !FirstClick;
-                                    }
-                                }
-                                else
-                                {
-                                    int length = Math.Abs(SecondClickY - FirstClickY);
-                                    if (length == 4)
-                                    {
-                                        if ((FirstClickY - SecondClickY) < 0)
-                                        {
-                                            for (int i = (SecondClickY - FirstClickY); i < SecondClickY; i++)
-                                            {
-                                                game.Player1.Field[FirstClickX, i].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                            ShipsToPlace--;
-                                        }
-                                        else
-                                        {
-                                            for (int i = (FirstClickY - SecondClickY); i < FirstClickY; i++)
-                                            {
-                                                game.Player1.Field[FirstClickX, i].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                            ShipsToPlace--;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        game.Player1.Field[FirstClickX, FirstClickY].State = CellState.Water;
-                                        FirstClick = !FirstClick;
-                                    }
-                                }
-                                break;
-                            case 3: //Cruiser 3
-                                if (IsVert)
-                                {
-                                    int length = Math.Abs(SecondClickX - FirstClickX);
-                                    if (length == 3)
-                                    {
-                                        if ((FirstClickX - SecondClickX) < 0)
-                                        {
-                                            for (int i = (SecondClickX - FirstClickX); i < SecondClickX; i++)
-                                            {
-                                                game.Player1.Field[i, FirstClickY].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                            ShipsToPlace--;
-                                        }
-                                        else
-                                        {
-                                            for (int i = (FirstClickX - SecondClickX); i < FirstClickX; i++)
-                                            {
-                                                game.Player1.Field[i, FirstClickY].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                            ShipsToPlace--;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        game.Player1.Field[FirstClickX, FirstClickY].State = CellState.Water;
-                                        FirstClick = !FirstClick;
-                                    }
-                                }
-                                else
-                                {
-                                    int length = Math.Abs(SecondClickY - FirstClickY);
-                                    if (length == 3)
-                                    {
-                                        if ((FirstClickY - SecondClickY) < 0)
-                                        {
-                                            for (int i = (SecondClickY - FirstClickY); i < SecondClickY; i++)
-                                            {
-                                                game.Player1.Field[FirstClickX, i].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                            ShipsToPlace--;
-                                        }
-                                        else
-                                        {
-                                            for (int i = (FirstClickY - SecondClickY); i < FirstClickY; i++)
-                                            {
-                                                game.Player1.Field[FirstClickX, i].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                            ShipsToPlace--;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        game.Player1.Field[FirstClickX, FirstClickY].State = CellState.Water;
-                                        FirstClick = !FirstClick;
-                                    }
-                                }
-                                break;
-                            case 2: //Submarine 3
-                                if (IsVert)
-                                {
-                                    int length = Math.Abs(SecondClickX - FirstClickX);
-                                    if (length == 3)
-                                    {
-                                        if ((FirstClickX - SecondClickX) < 0)
-                                        {
-                                            for (int i = (SecondClickX - FirstClickX); i < SecondClickX; i++)
-                                            {
-                                                game.Player1.Field[i, FirstClickY].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                            ShipsToPlace--;
-                                        }
-                                        else
-                                        {
-                                            for (int i = (FirstClickX - SecondClickX); i < FirstClickX; i++)
-                                            {
-                                                game.Player1.Field[i, FirstClickY].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                            ShipsToPlace--; 
-                                        }
-                                    }
-                                    else
-                                    {
-                                        game.Player1.Field[FirstClickX, FirstClickY].State = CellState.Water;
-                                        FirstClick = !FirstClick;
-                                    }
-                                }
-                                else
-                                {
-                                    int length = Math.Abs(SecondClickY - FirstClickY);
-                                    if (length == 3)
-                                    {
-                                        if ((FirstClickY - SecondClickY) < 0)
-                                        {
-                                            for (int i = (SecondClickY - FirstClickY); i < SecondClickY; i++)
-                                            {
-                                                game.Player1.Field[FirstClickX, i].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                        }
-                                        else
-                                        {
-                                            for (int i = (FirstClickY - SecondClickY); i < FirstClickY; i++)
-                                            {
-                                                game.Player1.Field[FirstClickX, i].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        game.Player1.Field[FirstClickX, FirstClickY].State = CellState.Water;
-                                        FirstClick = !FirstClick;
-                                    }
-                                }
-                                break;
-                            case 1: //Destroyer 2
-                                if (IsVert)
-                                {
-                                    int length = Math.Abs(SecondClickX - FirstClickX);
-                                    if (length == 2)
-                                    {
-                                        if ((FirstClickX - SecondClickX) < 0)
-                                        {
-                                            for (int i = (SecondClickX - FirstClickX); i < SecondClickX; i++)
-                                            {
-                                                game.Player1.Field[i, FirstClickY].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                        }
-                                        else
-                                        {
-                                            for (int i = (FirstClickX - SecondClickX); i < FirstClickX; i++)
-                                            {
-                                                game.Player1.Field[i, FirstClickY].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        game.Player1.Field[FirstClickX, FirstClickY].State = CellState.Water;
-                                        FirstClick = !FirstClick;
-                                    }
-                                }
-                                else
-                                {
-                                    int length = Math.Abs(SecondClickY - FirstClickY);
-                                    if (length == 2)
-                                    {
-                                        if ((FirstClickY - SecondClickY) < 0)
-                                        {
-                                            for (int i = (SecondClickY - FirstClickY); i < SecondClickY; i++)
-                                            {
-                                                game.Player1.Field[FirstClickX, i].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                        }
-                                        else
-                                        {
-                                            for (int i = (FirstClickY - SecondClickY); i < FirstClickY; i++)
-                                            {
-                                                game.Player1.Field[FirstClickX, i].State = CellState.Ship;
-                                            }
-                                            game.Player1.Field[SecondClickX, FirstClickY].State = CellState.Ship;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        game.Player1.Field[FirstClickX, FirstClickY].State = CellState.Water;
-                                        FirstClick = !FirstClick;
-                                    }
-                                }
-                                break;
+
+                            }
                         }
                     }
-                }
-                
-            }
-            else
-            {
-                GenAIShips();
-            }
-            switch (ShipsToPlace)
-            {
-                case 5:
-                    SetDisplay.Text = "Carrier. 5 Spaces Long";
                     break;
-                case 4:
-                    SetDisplay.Text = "Battleship, 4 Spaces Long";
+                case Shiptype.Cruiser:
+                    if (!game.Player1.Cruiser.IsPlaced)
+                    {
+                        if (IsVert)
+                        {
+                            if (!(y + 3 > 10))
+                            {
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    if (!(game.Player1.Field[x, y + i].State == CellState.Ship))
+                                    {
+                                        IsValid = true;
+                                    }
+                                    else
+                                    {
+                                        IsValid = false;
+                                        break;
+                                    }
+
+                                }
+                                if (IsValid)
+                                {
+                                    for (int i = 0; i < 3; i++)
+                                    {
+                                        game.Player1.Field[x, y + i].State = CellState.Ship;
+                                        game.Player1.Field[x, y + i].boundShip = game.Player1.Cruiser;
+                                        game.Player1.Cruiser.IsPlaced = true;
+                                    }
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            if (!(x + 3 > 10))
+                            {
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    if (!(game.Player1.Field[x + i, y].State == CellState.Ship))
+                                    {
+                                        IsValid = true;
+                                    }
+                                    else
+                                    {
+                                        IsValid = false;
+                                        break;
+                                    }
+
+                                }
+                                if (IsValid)
+                                {
+                                    for (int i = 0; i < 3; i++)
+                                    {
+                                        game.Player1.Field[x + i, y].State = CellState.Ship;
+                                        game.Player1.Field[x + i, y].boundShip = game.Player1.Cruiser;
+                                        game.Player1.Cruiser.IsPlaced = true;
+                                    }
+                                }
+
+                            }
+                        }
+                    }
                     break;
-                case 3:
-                    SetDisplay.Text = "Cruiser, 3 Spaces Long";
+                case Shiptype.Battleship:
+                    if (!game.Player1.Battleship.IsPlaced)
+                    {
+                        if (IsVert)
+                        {
+                            if (!(y + 4 > 10))
+                            {
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    if (!(game.Player1.Field[x, y + i].State == CellState.Ship))
+                                    {
+                                        IsValid = true;
+                                    }
+                                    else
+                                    {
+                                        IsValid = false;
+                                        break;
+                                    }
+
+                                }
+                                if (IsValid)
+                                {
+                                    for (int i = 0; i < 4; i++)
+                                    {
+                                        game.Player1.Field[x, y + i].State = CellState.Ship;
+                                        game.Player1.Field[x, y + i].boundShip = game.Player1.Battleship;
+                                        game.Player1.Battleship.IsPlaced = true;
+                                    }
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            if (!(x + 4 > 10))
+                            {
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    if (!(game.Player1.Field[x + i, y].State == CellState.Ship))
+                                    {
+                                        IsValid = true;
+                                    }
+                                    else
+                                    {
+                                        IsValid = false;
+                                        break;
+                                    }
+
+                                }
+                                if (IsValid)
+                                {
+                                    for (int i = 0; i < 4; i++)
+                                    {
+                                        game.Player1.Field[x + i, y].State = CellState.Ship;
+                                        game.Player1.Field[x + i, y].boundShip = game.Player1.Battleship;
+                                        game.Player1.Battleship.IsPlaced = true;
+                                    }
+                                }
+
+                            }
+                        }
+                    }
                     break;
-                case 2:
-                    SetDisplay.Text = "Submarine, 3 Spaces Long";
+                case Shiptype.Submarine:
+                    if (!game.Player1.Submarine.IsPlaced)
+                    {
+                        if (IsVert)
+                        {
+                            if (!(y + 3 > 10))
+                            {
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    if (!(game.Player1.Field[x, y + i].State == CellState.Ship))
+                                    {
+                                        IsValid = true;
+                                    }
+                                    else
+                                    {
+                                        IsValid = false;
+                                        break;
+                                    }
+
+                                }
+                                if (IsValid)
+                                {
+                                    for (int i = 0; i < 3; i++)
+                                    {
+                                        game.Player1.Field[x, y + i].State = CellState.Ship;
+                                        game.Player1.Field[x, y + i].boundShip = game.Player1.Submarine;
+                                        game.Player1.Submarine.IsPlaced = true;
+                                    }
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            if (!(x + 3 > 10))
+                            {
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    if (!(game.Player1.Field[x + i, y].State == CellState.Ship))
+                                    {
+                                        IsValid = true;
+                                    }
+                                    else
+                                    {
+                                        IsValid = false;
+                                        break;
+                                    }
+
+                                }
+                                if (IsValid)
+                                {
+                                    for (int i = 0; i < 3; i++)
+                                    {
+                                        game.Player1.Field[x + i, y].State = CellState.Ship;
+                                        game.Player1.Field[x + i, y].boundShip = game.Player1.Submarine;
+                                        game.Player1.Submarine.IsPlaced = true;
+                                    }
+                                }
+
+                            }
+                        }
+                    }
                     break;
-                case 1:
-                    SetDisplay.Text = "Destroyer, 2 Spaces Long";
+                case Shiptype.Destroyer:
+                    if (!game.Player1.Destroyer.IsPlaced)
+                    {
+                        if (IsVert)
+                        {
+                            if (!(y + 2 > 10))
+                            {
+                                for (int i = 0; i < 2; i++)
+                                {
+                                    if (!(game.Player1.Field[x, y + i].State == CellState.Ship))
+                                    {
+                                        IsValid = true;
+                                    }
+                                    else
+                                    {
+                                        IsValid = false;
+                                        break;
+                                    }
+
+                                }
+                                if (IsValid)
+                                {
+                                    for (int i = 0; i < 2; i++)
+                                    {
+                                        game.Player1.Field[x, y + i].State = CellState.Ship;
+                                        game.Player1.Field[x, y + i].boundShip = game.Player1.Destroyer;
+                                        game.Player1.Destroyer.IsPlaced = true;
+                                    }
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            if (!(x + 2 > 10))
+                            {
+                                for (int i = 0; i < 2; i++)
+                                {
+                                    if (!(game.Player1.Field[x + i, y].State == CellState.Ship))
+                                    {
+                                        IsValid = true;
+                                    }
+                                    else
+                                    {
+                                        IsValid = false;
+                                        break;
+                                    }
+
+                                }
+                                if (IsValid)
+                                {
+                                    for (int i = 0; i < 2; i++)
+                                    {
+                                        game.Player1.Field[x + i, y].State = CellState.Ship;
+                                        game.Player1.Field[x + i, y].boundShip = game.Player1.Destroyer;
+                                        game.Player1.Destroyer.IsPlaced = true;
+                                    }
+                                }
+
+                            }
+                        }
+                    }
                     break;
                 default:
-                    SetDisplay.Text = "All Done! Hit Ready to Play!";
                     break;
-                   
             }
+
         }
 
         private void GenAIShips()
@@ -454,8 +414,48 @@ namespace Battleship_2.SubPages
         {
             if (ShipsToPlace == 0)
             {
+                GenAIShips();
                 this.Frame.Navigate(typeof(SubPages.SetupPage), game);
             }
+        }
+
+        private void Ship_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+
+            if (rb != null && !game.Player1.Carrier.IsPlaced)
+            {
+                string shipname = rb.Tag.ToString();
+                switch (shipname)
+                {
+                    case "Carrier":
+                        slcShip = Shiptype.Carrier;
+                        break;
+                    case "Cruiser":
+                        slcShip = Shiptype.Cruiser;
+                        break;
+                    case "Battleship":
+                        slcShip = Shiptype.Battleship;
+                        break;
+                    case "Submarine":
+                        slcShip = Shiptype.Submarine;
+                        break;
+                    case "Destroyer":
+                        slcShip = Shiptype.Destroyer;
+                        break;
+                }
+            }
+        }
+
+        private void IsVert_Checked(object sender, RoutedEventArgs e)
+        {
+            IsVert = true;
+
+        }
+        private void IsVert_Unchecked(object sender, RoutedEventArgs e)
+        {
+            IsVert = false;
+
         }
     }
 }
