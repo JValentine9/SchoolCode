@@ -12,18 +12,20 @@ namespace OverloadingOperators
 
         public int WholeNumber { get; set; }
         public int Numerator { get; set; }
+
         public int Denominator
         {
-            get => Denominator;
+            get { return denom; }
             set
             {
-                if (value == 0)
+                if (!(value == 0))
                 {
-                    throw new ArgumentException();
+                    denom = value;
                 }
                 else
                 {
-                    denom = value;
+                    throw new ArgumentException("Number must not be 0");
+
                 }
             }
         }
@@ -45,7 +47,6 @@ namespace OverloadingOperators
             else
             {
                 denom = denominator;
-                Denominator = denominator;
             }
 
         }
@@ -58,12 +59,13 @@ namespace OverloadingOperators
         /// <returns>returns an int which is the GCD of m and n</returns>
         public static int GCD(int m, int n)
         {
-            int remainder;
+            int Remainder;
+
             while (n != 0)
             {
-                remainder = m % n;
+                Remainder = m % n;
                 m = n;
-                n = remainder;
+                n = Remainder;
             }
 
             return m;
@@ -78,12 +80,16 @@ namespace OverloadingOperators
         /// <returns>Returns the sum of Fraction M and Fraction N</returns>
         public static Fraction operator +(Fraction m, Fraction n)
         {
+            m.Simplify();
+            n.Simplify();
+
             int mNum = m.Numerator * n.Denominator;
             int nNum = n.Numerator * m.Denominator;
-            int Num = nNum + nNum;
+            int Num = mNum + nNum; //new numerator
             int FinalDen = n.Denominator * m.Denominator;
             int Whole = m.WholeNumber + n.WholeNumber;
             Fraction ans = new Fraction(Whole, Num, FinalDen);
+            ans.Simplify();
             return ans;
 
         }
@@ -96,12 +102,16 @@ namespace OverloadingOperators
         /// <returns>Returns the difference of Fraction M and Fraction N</returns>
         public static Fraction operator -(Fraction m, Fraction n)
         {
+            m.Simplify();
+            n.Simplify();
+            m.MakeImproper();
+            n.MakeImproper();
             int mNum = m.Numerator * n.Denominator;
             int nNum = n.Numerator * m.Denominator;
-            int Num = nNum - nNum;
+            int Num = mNum - nNum;
             int FinalDen = n.Denominator * m.Denominator;
-            int Whole = m.WholeNumber - n.WholeNumber;
-            Fraction ans = new Fraction(Whole, Num, FinalDen);
+            Fraction ans = new Fraction(0, Num, FinalDen);
+            ans.Simplify();
             return ans;
         }
 
@@ -113,10 +123,14 @@ namespace OverloadingOperators
         /// <returns>Returns the product of Fraction M and Fraction N</returns>
         public static Fraction operator *(Fraction m, Fraction n)
         {
+            m.Simplify();
+            n.Simplify();
+            m.MakeImproper();
+            n.MakeImproper();
             int Den = m.Denominator * n.Denominator;
             int Num = n.Numerator * m.Numerator;
-            int Whole = m.WholeNumber * n.WholeNumber;
-            Fraction ans = new Fraction(Whole, Num, Den);
+            Fraction ans = new Fraction(0, Num, Den);
+            ans.Simplify();
             return ans;
         }
 
@@ -128,10 +142,14 @@ namespace OverloadingOperators
         /// <returns>Return the divisor of the two fractions</returns>
         public static Fraction operator /(Fraction m, Fraction n)
         {
-            int Den = m.Numerator * n.Denominator;
-            int Num = n.Numerator * m.Denominator;
-            int Whole = m.WholeNumber / n.WholeNumber;
-            Fraction ans = new Fraction(Whole, Num, Den);
+            m.Simplify();
+            n.Simplify();
+            m.MakeImproper();
+            n.MakeImproper();
+            int Num = m.Numerator * n.Denominator;
+            int Den = n.Numerator * m.Denominator;
+            Fraction ans = new Fraction(0, Den, Num);
+            ans.Simplify();
             return ans;
         }
 
@@ -186,7 +204,7 @@ namespace OverloadingOperators
         /// </summary>
         public void MakeImproper()
         {
-            int Add = WholeNumber + Denominator;
+            int Add = WholeNumber * Denominator;
             Numerator = Numerator + Add;
             WholeNumber = 0;
         }
@@ -204,7 +222,7 @@ namespace OverloadingOperators
         /// Returns the fradction in it's current form.
         /// </summary>
         /// <returns></returns>
-        public String ToString()
+        public override String ToString()
         {
             return $"{WholeNumber} {Numerator}/{Denominator}";
         }
@@ -222,7 +240,7 @@ namespace OverloadingOperators
         /// Returns the hashcode of this fraction
         /// </summary>
         /// <returns>returns the hashcode of this fraction</returns>
-        public int GetHashCode()
+        public override int GetHashCode()
         {
             return base.GetHashCode();
         }
