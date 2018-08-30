@@ -5,8 +5,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Runtime.Serialization;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -181,6 +184,29 @@ namespace Battleship_2.SubPages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             game = (Game)e.Parameter;
+        }
+
+        string contents;
+        private async void Save_ClickAsync(object sender, RoutedEventArgs e)
+        {
+            var savepicker = new FileSavePicker();
+            savepicker.FileTypeChoices.Add("", new List<string> { ".cont" });
+            StorageFile file = await savepicker.PickSaveFileAsync();
+            if (file != null)
+            {
+                DataContractSerializer ser = new DataContractSerializer(typeof(Game));
+                contents = "";
+                using (var stream = new MemoryStream())
+                {
+                    ser.WriteObject(stream, game);
+                    stream.Seek(0, SeekOrigin.Begin);
+                    using (var streamreader = new StreamReader(stream))
+                    {
+                        contents = streamreader.ReadToEnd();
+                    }
+                }
+            }
+            await FileIO.WriteTextAsync(file, contents);
         }
     }
 }

@@ -14,6 +14,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Storage.Pickers;
+using Windows.Storage;
+using System.Runtime.Serialization;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -87,7 +90,7 @@ namespace Contact_Manager
                     break;
             }
 
-            contacts.Add(new Contact() { Name = NameInput.Text, Phone = new PhoneNumber() { Number = PhoneInput.Text, Type = PType }, EmailAddress = new Email() { Address = EmailInput.Text, Type = EType } });
+            contacts.Add(new Contact() { FirstName = FirstNameInput.Text, LastName = LastNameInput.Text, Phone = new PhoneNumber() { Number = PhoneInput.Text, Type = PType }, Email = new Email() { Address = EmailInput.Text, Type = EType } });
             if (AddPopup.IsOpen) { AddPopup.IsOpen = false; }
             ContactsListView.ItemsSource = null;
             ContactsListView.ItemsSource = contacts;
@@ -95,53 +98,60 @@ namespace Contact_Manager
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            if(SavePath == "")
-            {
-                if (!SaveAsPopup.IsOpen) { SaveAsPopup.IsOpen = true; }
-            }
-            else
-            {
-                Save();
-            }
+            
+                SaveAsync();
+            
         }
 
         private void SaveAs_Click(object sender, RoutedEventArgs e)
         {
-            if (!SaveAsPopup.IsOpen) { SaveAsPopup.IsOpen = true; }
+            SaveAsync();
         }
-        private void FinalSave_Click(object sender, RoutedEventArgs e)
-        {
-            SavePath = SavePathInput.Text;
-            Save();
-            if (SaveAsPopup.IsOpen) { SaveAsPopup.IsOpen = false; }
-        }
+        
         private void OpenFile_Click(object sender, RoutedEventArgs e)
         {
-            OpenPath = OpenPathInput.Text;
-            using (FileStream fs = new FileStream(OpenPath, FileMode.Open))
-            {
-                contacts = Serializer.Deserialize<List<Contact>>(fs);
-            }
-            if (OpenPopup.IsOpen) { OpenPopup.IsOpen = false; }
+            OpenFile();
+            
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
-            if (!OpenPopup.IsOpen) { OpenPopup.IsOpen = true; }
+            OpenFile();
         }
 
-        private void Save()
+        private void OpenFile()
         {
-            using (FileStream fs = new FileStream(SavePath, FileMode.Create))
+            throw new NotImplementedException();
+        }
+
+        string contents;
+        private async void SaveAsync()
+        {
+            var savepicker = new FileSavePicker();
+            savepicker.FileTypeChoices.Add("", new List<string> { ".cont" });
+            StorageFile file = await savepicker.PickSaveFileAsync();
+            if (file != null)
             {
-                Serializer.Serialize<List<Contact>>(fs, contacts);
+                DataContractSerializer ser = new DataContractSerializer(typeof(List<Contact>));
+                contents = "";
+                using (var stream = new MemoryStream())
+                {
+                    ser.WriteObject(stream, contacts);
+                    stream.Seek(0, SeekOrigin.Begin);
+                    using (var streamreader = new StreamReader(stream))
+                    {
+                        contents = streamreader.ReadToEnd();
+                    }
+                }
             }
+            await FileIO.WriteTextAsync(file, contents);
         }
 
         private void DisplayContact(object sender, SelectionChangedEventArgs e)
         {
             CurrentContact = "";
-            ContactDisplay.Text = ((ListView)sender).SelectedItem.ToString(); ;
+            ContactDisplay.Text = ((ListView)sender).SelectedItem.ToString(); 
+
         }
     }
 }

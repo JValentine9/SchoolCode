@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Runtime.Serialization;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -33,31 +34,35 @@ namespace Battleship_2
             this.InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void NewClick(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(SubPages.SetupPage));
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void LoadClick(object sender, RoutedEventArgs e)
         {
-            var picker = new FileOpenPicker();
-            picker.ViewMode = PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            picker.FileTypeFilter.Add(".bts");
+            LoadGameAsync();
+            this.Frame.Navigate(typeof(SubPages.SetupPage), game);
+        }
 
-            /*
-            StorageFile file = await picker.PickSingleFileAsync();
+        private async void LoadGameAsync()
+        {
+            var savepicker = new FileSavePicker();
+            savepicker.FileTypeChoices.Add("", new List<string> { ".cont" });
+            StorageFile file = await savepicker.PickSaveFileAsync();
             if (file != null)
             {
-                
+                DataContractSerializer ser = new DataContractSerializer(typeof(Game));
+                using (var stream = new MemoryStream())
+                {
+                    ser.WriteObject(stream, game);
+                    stream.Seek(0, SeekOrigin.Begin);
+                    using (var streamreader = new StreamReader(stream))
+                    {
+                        contents = streamreader.ReadToEnd();
+                    }
+                }
             }
-            else
-            {
-
-            }
-            */
-
-            this.Frame.Navigate(typeof(SubPages.SetupPage), game);
         }
     }
 }

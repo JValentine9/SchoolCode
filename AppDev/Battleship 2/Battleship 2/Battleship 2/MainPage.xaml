@@ -27,7 +27,7 @@
                         HorizontalAlignment="Center"
                         FontSize="36"
                         Height="100"
-                        Width="250" Click="Button_Click"
+                        Width="250" Click="NewClick"
                         BorderThickness="4"
                         BorderBrush="Black"/>
                 <Button Content="Load Game"
@@ -35,7 +35,7 @@
                         HorizontalAlignment="Center"
                         FontSize="36"
                         Height="100"
-                        Width="250" Click="Button_Click_1"
+                        Width="250" Click="LoadClick"
                         BorderThickness="4"
                         BorderBrush="Black"/>
             </StackPanel>
