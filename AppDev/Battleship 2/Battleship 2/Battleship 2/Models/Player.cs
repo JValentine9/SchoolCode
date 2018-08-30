@@ -15,7 +15,6 @@ namespace Battleship_2.Models
         public Ship Cruiser = new Ship { Name = "Cruiser", Health = 3 };
         public Ship Submarine = new Ship { Name = "Submarine", Health = 3 };
         public Ship Destroyer = new Ship { Name = "Destroyer", Health = 2 };
-
-        public bool hasWon;
+        public int ShipsLeft { get; set; }
     }
 }

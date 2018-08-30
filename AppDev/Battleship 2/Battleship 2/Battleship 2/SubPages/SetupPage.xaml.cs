@@ -35,12 +35,15 @@ namespace Battleship_2.SubPages
         int y;
         bool IsValid;
         bool IsVert;
+        Random rand = new Random();
         ClassStatetoBrushConverter con = new ClassStatetoBrushConverter(); //converter for CellState to Color for the buttons
+        bool Pass = true;
 
         public SetupPage() //Sets up the page
         {
             this.InitializeComponent(); //generates C# code from UWP Xaml document
             MakeGrid(); //Make the placement grid
+            Ready.IsEnabled = false;
 
         }
 
@@ -111,7 +114,10 @@ namespace Battleship_2.SubPages
                                         game.Player1.Field[x, y + i].State = CellState.Ship;
                                         game.Player1.Field[x, y + i].boundShip = game.Player1.Carrier;
                                         game.Player1.Carrier.IsPlaced = true;
+
                                     }
+                                    ShipsToPlace--;
+                                    Carrier.IsEnabled = false;
                                 }
 
                             }
@@ -141,6 +147,8 @@ namespace Battleship_2.SubPages
                                         game.Player1.Field[x + i, y].boundShip = game.Player1.Carrier;
                                         game.Player1.Carrier.IsPlaced = true;
                                     }
+                                    ShipsToPlace--;
+                                    Carrier.IsEnabled = false;
                                 }
 
                             }
@@ -175,6 +183,8 @@ namespace Battleship_2.SubPages
                                         game.Player1.Field[x, y + i].boundShip = game.Player1.Cruiser;
                                         game.Player1.Cruiser.IsPlaced = true;
                                     }
+                                    ShipsToPlace--;
+                                    Cruiser.IsEnabled = false;
                                 }
 
                             }
@@ -204,6 +214,8 @@ namespace Battleship_2.SubPages
                                         game.Player1.Field[x + i, y].boundShip = game.Player1.Cruiser;
                                         game.Player1.Cruiser.IsPlaced = true;
                                     }
+                                    ShipsToPlace--;
+                                    Cruiser.IsEnabled = false;
                                 }
 
                             }
@@ -238,6 +250,9 @@ namespace Battleship_2.SubPages
                                         game.Player1.Field[x, y + i].boundShip = game.Player1.Battleship;
                                         game.Player1.Battleship.IsPlaced = true;
                                     }
+
+                                    ShipsToPlace--;
+                                    Battleship.IsEnabled = false;
                                 }
 
                             }
@@ -267,6 +282,9 @@ namespace Battleship_2.SubPages
                                         game.Player1.Field[x + i, y].boundShip = game.Player1.Battleship;
                                         game.Player1.Battleship.IsPlaced = true;
                                     }
+                                    ShipsToPlace--;
+                                    Battleship.IsEnabled = false;
+
                                 }
 
                             }
@@ -300,7 +318,11 @@ namespace Battleship_2.SubPages
                                         game.Player1.Field[x, y + i].State = CellState.Ship;
                                         game.Player1.Field[x, y + i].boundShip = game.Player1.Submarine;
                                         game.Player1.Submarine.IsPlaced = true;
+
                                     }
+                                    ShipsToPlace--;
+                                    Submarine.IsEnabled = false;
+
                                 }
 
                             }
@@ -330,6 +352,9 @@ namespace Battleship_2.SubPages
                                         game.Player1.Field[x + i, y].boundShip = game.Player1.Submarine;
                                         game.Player1.Submarine.IsPlaced = true;
                                     }
+
+                                    ShipsToPlace--;
+                                    Submarine.IsEnabled = false;
                                 }
 
                             }
@@ -364,6 +389,9 @@ namespace Battleship_2.SubPages
                                         game.Player1.Field[x, y + i].boundShip = game.Player1.Destroyer;
                                         game.Player1.Destroyer.IsPlaced = true;
                                     }
+
+                                    ShipsToPlace--;
+                                    Destroyer.IsEnabled = false;
                                 }
 
                             }
@@ -393,6 +421,8 @@ namespace Battleship_2.SubPages
                                         game.Player1.Field[x + i, y].boundShip = game.Player1.Destroyer;
                                         game.Player1.Destroyer.IsPlaced = true;
                                     }
+                                    ShipsToPlace--;
+                                    Destroyer.IsEnabled = false;
                                 }
 
                             }
@@ -403,27 +433,418 @@ namespace Battleship_2.SubPages
                     break;
             }
 
+            if (ShipsToPlace == 0)
+            {
+                Ready.IsEnabled = true;
+            }
+
         }
 
         private void GenAIShips()
         {
-            throw new NotImplementedException();
+            for (int x = 0; x < 10; x++)
+            {
+                for (int y = 0; y < 10; y++)
+                {
+                    game.Player2.Field[x, y] = new Cell();
+                }
+            }
+            Pass = false;
+            do
+            {
+                if (rand.Next(0, 2) == 0)
+                {
+                    IsVert = false;
+                }
+                else
+                {
+                    IsVert = true;
+                }
+
+                x = rand.Next(0, 10);
+                y = rand.Next(0, 10);
+                //Carrier
+
+                if (IsVert)
+                {
+                    if (!(y + 5 > 10))
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            if (!(game.Player2.Field[x, y + i].State == CellState.Ship))
+                            {
+                                IsValid = true;
+                            }
+                            else
+                            {
+                                IsValid = false;
+                                break;
+                            }
+
+                        }
+                        if (IsValid)
+                        {
+                            for (int i = 0; i < 5; i++)
+                            {
+                                game.Player2.Field[x, y + i].State = CellState.Ship;
+                                game.Player2.Field[x, y + i].boundShip = game.Player2.Carrier;
+                                game.Player2.Carrier.IsPlaced = true;
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (!(x + 5 > 10))
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            if (!(game.Player2.Field[x + i, y].State == CellState.Ship))
+                            {
+                                IsValid = true;
+                            }
+                            else
+                            {
+                                IsValid = false;
+                                break;
+                            }
+
+                        }
+                        if (IsValid)
+                        {
+                            for (int i = 0; i < 5; i++)
+                            {
+                                game.Player2.Field[x + i, y].State = CellState.Ship;
+                                game.Player2.Field[x + i, y].boundShip = game.Player2.Carrier;
+                                game.Player2.Carrier.IsPlaced = true;
+                                Pass = true;
+                            }
+                        }
+
+                    }
+                }
+            } while (!Pass);
+            //Cruiser
+            Pass = false;
+            do
+            {
+                if (rand.Next(0, 2) == 0)
+                {
+                    IsVert = false;
+                }
+                else
+                {
+                    IsVert = true;
+                }
+
+                x = rand.Next(0, 10);
+                y = rand.Next(0, 10);
+
+                if (IsVert)
+                {
+                    if (!(y + 3 > 10))
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (!(game.Player2.Field[x, y + i].State == CellState.Ship))
+                            {
+                                IsValid = true;
+                            }
+                            else
+                            {
+                                IsValid = false;
+                                break;
+                            }
+
+                        }
+                        if (IsValid)
+                        {
+                            for (int i = 0; i < 3; i++)
+                            {
+                                game.Player2.Field[x, y + i].State = CellState.Ship;
+                                game.Player2.Field[x, y + i].boundShip = game.Player2.Cruiser;
+                                game.Player2.Cruiser.IsPlaced = true;
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (!(x + 3 > 10))
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (!(game.Player2.Field[x + i, y].State == CellState.Ship))
+                            {
+                                IsValid = true;
+                            }
+                            else
+                            {
+                                IsValid = false;
+                                break;
+                            }
+
+                        }
+                        if (IsValid)
+                        {
+                            for (int i = 0; i < 3; i++)
+                            {
+                                game.Player2.Field[x + i, y].State = CellState.Ship;
+                                game.Player2.Field[x + i, y].boundShip = game.Player2.Cruiser;
+                                game.Player2.Cruiser.IsPlaced = true;
+                                Pass = true;
+                            }
+                        }
+
+                    }
+                }
+            } while (!Pass);
+            //Battleship
+            Pass = false;
+            do
+            {
+                if (rand.Next(0, 2) == 0)
+                {
+                    IsVert = false;
+                }
+                else
+                {
+                    IsVert = true;
+                }
+
+                x = rand.Next(0, 10);
+                y = rand.Next(0, 10);
+
+                if (IsVert)
+                {
+                    if (!(y + 4 > 10))
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (!(game.Player2.Field[x, y + i].State == CellState.Ship))
+                            {
+                                IsValid = true;
+                            }
+                            else
+                            {
+                                IsValid = false;
+                                break;
+                            }
+
+                        }
+                        if (IsValid)
+                        {
+                            for (int i = 0; i < 4; i++)
+                            {
+                                game.Player2.Field[x, y + i].State = CellState.Ship;
+                                game.Player2.Field[x, y + i].boundShip = game.Player2.Battleship;
+                                game.Player2.Battleship.IsPlaced = true;
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (!(x + 4 > 10))
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (!(game.Player2.Field[x + i, y].State == CellState.Ship))
+                            {
+                                IsValid = true;
+                            }
+                            else
+                            {
+                                IsValid = false;
+                                break;
+                            }
+
+                        }
+                        if (IsValid)
+                        {
+                            for (int i = 0; i < 4; i++)
+                            {
+                                game.Player2.Field[x + i, y].State = CellState.Ship;
+                                game.Player2.Field[x + i, y].boundShip = game.Player2.Battleship;
+                                game.Player2.Battleship.IsPlaced = true;
+                                Pass = true;
+                            }
+                        }
+
+                    }
+                }
+            } while (!Pass);
+            //Submarine
+            Pass = false;
+            do
+            {
+                if (rand.Next(0, 2) == 0)
+                {
+                    IsVert = false;
+                }
+                else
+                {
+                    IsVert = true;
+                }
+
+                x = rand.Next(0, 10);
+                y = rand.Next(0, 10);
+                if (IsVert)
+                {
+                    if (!(y + 3 > 10))
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (!(game.Player2.Field[x, y + i].State == CellState.Ship))
+                            {
+                                IsValid = true;
+                            }
+                            else
+                            {
+                                IsValid = false;
+                                break;
+                            }
+
+                        }
+                        if (IsValid)
+                        {
+                            for (int i = 0; i < 3; i++)
+                            {
+                                game.Player2.Field[x, y + i].State = CellState.Ship;
+                                game.Player2.Field[x, y + i].boundShip = game.Player2.Submarine;
+                                game.Player2.Submarine.IsPlaced = true;
+                                Pass = true;
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (!(x + 3 > 10))
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (!(game.Player2.Field[x + i, y].State == CellState.Ship))
+                            {
+                                IsValid = true;
+                            }
+                            else
+                            {
+                                IsValid = false;
+                                break;
+                            }
+
+                        }
+                        if (IsValid)
+                        {
+                            for (int i = 0; i < 3; i++)
+                            {
+                                game.Player2.Field[x + i, y].State = CellState.Ship;
+                                game.Player2.Field[x + i, y].boundShip = game.Player2.Submarine;
+                                game.Player2.Submarine.IsPlaced = true;
+                                Pass = true;
+                            }
+                        }
+
+                    }
+                }
+            } while (!Pass);
+            //Destroyer
+            Pass = false;
+            do
+            {
+                if (rand.Next(0, 2) == 0)
+                {
+                    IsVert = false;
+                }
+                else
+                {
+                    IsVert = true;
+                }
+
+                x = rand.Next(0, 10);
+                y = rand.Next(0, 10);
+                if (IsVert)
+                {
+                    if (!(y + 2 > 10))
+                    {
+                        for (int i = 0; i < 2; i++)
+                        {
+                            if (!(game.Player2.Field[x, y + i].State == CellState.Ship))
+                            {
+                                IsValid = true;
+                            }
+                            else
+                            {
+                                IsValid = false;
+                                break;
+                            }
+
+                        }
+                        if (IsValid)
+                        {
+                            for (int i = 0; i < 2; i++)
+                            {
+                                game.Player2.Field[x, y + i].State = CellState.Ship;
+                                game.Player2.Field[x, y + i].boundShip = game.Player2.Destroyer;
+                                game.Player2.Destroyer.IsPlaced = true;
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (!(x + 2 > 10))
+                    {
+                        for (int i = 0; i < 2; i++)
+                        {
+                            if (!(game.Player2.Field[x + i, y].State == CellState.Ship))
+                            {
+                                IsValid = true;
+                            }
+                            else
+                            {
+                                IsValid = false;
+                                break;
+                            }
+
+                        }
+                        if (IsValid)
+                        {
+                            for (int i = 0; i < 2; i++)
+                            {
+                                game.Player2.Field[x + i, y].State = CellState.Ship;
+                                game.Player2.Field[x + i, y].boundShip = game.Player2.Destroyer;
+                                game.Player2.Destroyer.IsPlaced = true;
+                                Pass = true;
+                            }
+                        }
+
+                    }
+                }
+            } while (!Pass);
         }
+
+      
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (ShipsToPlace == 0)
-            {
+            
                 GenAIShips();
-                this.Frame.Navigate(typeof(SubPages.SetupPage), game);
-            }
+                this.Frame.Navigate(typeof(SubPages.GamePage), game);
+            
         }
 
         private void Ship_Checked(object sender, RoutedEventArgs e)
         {
             RadioButton rb = sender as RadioButton;
 
-            if (rb != null && !game.Player1.Carrier.IsPlaced)
+            if (rb != null)
             {
                 string shipname = rb.Tag.ToString();
                 switch (shipname)

@@ -8,7 +8,7 @@ namespace Battleship_2.Models
 {
     class Game
     {
-        public Player Player1 = new Player();
-        public Player player2 = new Player();
+        public Player Player1 = new Player { ShipsLeft = 5};
+        public Player Player2 = new Player { ShipsLeft = 5};
     }
 }
