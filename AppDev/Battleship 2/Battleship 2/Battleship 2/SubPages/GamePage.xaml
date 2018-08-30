@@ -368,10 +368,15 @@
               Background="#2E2AFF"/>
 
 
-        <Popup x:Name="Hit">
+        <Popup x:Name="Hit"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Tapped="CloseHit">
             <TextBlock x:Name="WhoHit"
-                      Text="{}"
-                      FontSize="24"/>
+                      Text=""
+                      FontSize="24"
+                       HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
         </Popup>
     </Grid>
 </Page>

@@ -27,6 +27,9 @@ namespace Battleship_2.SubPages
     {
         Game game = new Game();
         ClassStatetoBrushConverter con = new ClassStatetoBrushConverter();
+        int x;
+        int y;
+        Random rand = new Random();
 
         public GamePage()
         {
@@ -40,9 +43,8 @@ namespace Battleship_2.SubPages
             {
                 for (int y = 0; y < 10; y++)
                 {
-                    //player
+                    //player Field
                     Button Cell = new Button(); //creates button
-                    Cell.Tapped += SelectBoi; //adds on tap method SelectBoi
                     Cell.DataContext = game.Player1.Field[x, y]; // sets the cell as the datacontext of the button
                     Cell.Height = 50; // i leik squares
                     Cell.Width = 50; // i leik squares
@@ -60,9 +62,9 @@ namespace Battleship_2.SubPages
                     Grid.SetColumn(Cell, y); // gitcho place boiiiii place on y
                     Grid.SetRow(Cell, x); //place on x  
 
-                    //AI
+                    //AI Field
                     Button Cell2 = new Button(); //creates button
-                    Cell2.Tapped += AISelectBoi; //adds on tap method SelectBoi
+                    Cell2.Tapped += SelectBoi; //adds on tap method SelectBoi
                     Cell2.DataContext = game.Player2.Field[x, y]; // sets the cell as the datacontext of the button
                     Cell2.Height = 50; // i leik squares
                     Cell2.Width = 50; // i leik squares
@@ -83,7 +85,7 @@ namespace Battleship_2.SubPages
                                                   
             }
             
-        }
+        } //TODO fix binding
 
         private void AISelectBoi(object sender, TappedRoutedEventArgs e)
         {
@@ -94,12 +96,79 @@ namespace Battleship_2.SubPages
 
         private void AIMove()
         {
-            throw new NotImplementedException();
+            do
+            {
+                x = rand.Next(0, 10);
+                y = rand.Next(0, 10);
+            } while (game.Player1.Field[x, y].Struck == true);
+
+            if (game.Player1.Field[x, y].State == CellState.Ship)
+            {
+                game.Player1.Field[x, y].State = CellState.Hit;
+                game.Player1.Field[x, y].boundShip.Health--;
+                if (game.Player1.Field[x, y].boundShip.Health == 0)
+                {
+                    game.Player1.ShipsLeft--;
+                    WhoHit.Text = $"Player 2 sunk your {game.Player1.Field[x, y].boundShip.Name}";
+                }
+                else
+                {
+                    WhoHit.Text = $"Player 2 hit your {game.Player1.Field[x, y].boundShip.Name}";
+                }
+            }
+            else if (game.Player1.Field[x, y].State == CellState.Water)
+            {
+                game.Player1.Field[x, y].State = CellState.Miss;
+                WhoHit.Text = $"Player 2 Missed";
+            }
+            else
+            {
+                WhoHit.Text = $"Invalid Target";
+            }
+            if (!Hit.IsOpen) { Hit.IsOpen = true; }
+            if (game.Player1.ShipsLeft == 0)
+            {
+                WhoHit.Text = "Player 2 Won!";
+            }
         } 
 
         private void PlayerMove(Button click)
         {
-            throw new NotImplementedException();
+            x = (int)click.GetValue(Grid.ColumnProperty);
+            y = (int)click.GetValue(Grid.RowProperty);
+            if (game.Player2.Field[x,y].State == CellState.Ship)
+            {
+                game.Player2.Field[x, y].State = CellState.Hit;
+                game.Player2.Field[x, y].boundShip.Health--;
+                if (game.Player2.Field[x, y].boundShip.Health == 0)
+                {
+                    game.Player2.ShipsLeft--;
+                    WhoHit.Text = $"You sunk Player 2's {game.Player2.Field[x, y].boundShip.Name}";
+                }
+                else
+                {
+                    WhoHit.Text = $"You hit Player 2's {game.Player2.Field[x, y].boundShip.Name}";
+                }
+            }
+            else if (game.Player2.Field[x, y].State == CellState.Water)
+            {
+                game.Player2.Field[x, y].State = CellState.Miss;
+                WhoHit.Text = $"You Missed";
+            }
+            else
+            {
+                WhoHit.Text = $"Invalid Target";
+            }
+            if (!Hit.IsOpen) {Hit.IsOpen = true; }
+            if (game.Player2.ShipsLeft == 0)
+            {
+                WhoHit.Text = "You win! You sank all of Player 2's Ships!";
+            }
+        }
+
+        private void CloseHit (object sender, RoutedEventArgs e)
+        {
+            if (Hit.IsOpen) { Hit.IsOpen = false; }
         }
 
         private void SelectBoi(object sender, TappedRoutedEventArgs e)

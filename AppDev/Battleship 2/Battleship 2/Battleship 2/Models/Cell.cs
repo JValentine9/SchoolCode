@@ -16,6 +16,7 @@ namespace Battleship_2.Models
         public event PropertyChangedEventHandler PropertyChanged;
 
         private CellState state;
+        private bool struck = false;
         public Ship boundShip;
 
         public CellState State
@@ -31,6 +32,15 @@ namespace Battleship_2.Models
         public void FieldChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public bool Struck
+        {
+            get { return struck; }
+            set
+            {
+                struck = value;
+            }
         }
     }
 }
