@@ -7,7 +7,7 @@
     <ProjectGuid>{95F49EC0-797C-4F9B-9077-FA81168512D0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>ConsoleIO</RootNamespace>
-    <AssemblyName>ConsoleIO</AssemblyName>
+    <AssemblyName>ValentineJ_ConsoleIO</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\ConsoleIO.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\ValentineJ_ConsoleIO.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>

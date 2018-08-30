@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Battleship_2.Models
 {
+    DataContract
     class Game
     {
         public Player Player1 = new Player { ShipsLeft = 5};

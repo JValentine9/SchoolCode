@@ -148,7 +148,7 @@ namespace OverloadingOperators
             n.MakeImproper();
             int Num = m.Numerator * n.Denominator;
             int Den = n.Numerator * m.Denominator;
-            Fraction ans = new Fraction(0, Den, Num);
+            Fraction ans = new Fraction(0, Num, Den);
             ans.Simplify();
             return ans;
         }

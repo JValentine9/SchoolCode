@@ -28,7 +28,7 @@ namespace Battleship_2.SubPages
     /// </summary>
     public sealed partial class GamePage : Page
     {
-        Game game = new Game();
+        Game game;
         ClassStatetoBrushConverter con = new ClassStatetoBrushConverter();
         int x;
         int y;
@@ -37,7 +37,7 @@ namespace Battleship_2.SubPages
         public GamePage()
         {
             this.InitializeComponent();
-            CreateGrids();
+            
         }
 
         private void CreateGrids()
@@ -67,7 +67,7 @@ namespace Battleship_2.SubPages
 
                     //AI Field
                     Button Cell2 = new Button(); //creates button
-                    Cell2.Tapped += SelectBoi; //adds on tap method SelectBoi
+                    Cell2.Tapped += AISelectBoi; //adds on tap method SelectBoi
                     Cell2.DataContext = game.Player2.Field[x, y]; // sets the cell as the datacontext of the button
                     Cell2.Height = 50; // i leik squares
                     Cell2.Width = 50; // i leik squares
@@ -93,8 +93,10 @@ namespace Battleship_2.SubPages
         private void AISelectBoi(object sender, TappedRoutedEventArgs e)
         {
             var Click = (Button)sender;
-            PlayerMove(Click);
-            AIMove();
+            if (PlayerMove(Click))
+            {
+                AIMove();
+            }
         }
 
         private void AIMove()
@@ -135,10 +137,11 @@ namespace Battleship_2.SubPages
             }
         } 
 
-        private void PlayerMove(Button click)
+        private bool PlayerMove(Button click)
         {
-            x = (int)click.GetValue(Grid.ColumnProperty);
-            y = (int)click.GetValue(Grid.RowProperty);
+            bool ValidShot = false;
+            y = (int)click.GetValue(Grid.ColumnProperty);
+            x = (int)click.GetValue(Grid.RowProperty);
             if (game.Player2.Field[x,y].State == CellState.Ship)
             {
                 game.Player2.Field[x, y].State = CellState.Hit;
@@ -147,26 +150,30 @@ namespace Battleship_2.SubPages
                 {
                     game.Player2.ShipsLeft--;
                     WhoHit.Text = $"You sunk Player 2's {game.Player2.Field[x, y].boundShip.Name}";
+                    ValidShot = true;
                 }
                 else
                 {
                     WhoHit.Text = $"You hit Player 2's {game.Player2.Field[x, y].boundShip.Name}";
+                    ValidShot = true;
                 }
             }
             else if (game.Player2.Field[x, y].State == CellState.Water)
             {
                 game.Player2.Field[x, y].State = CellState.Miss;
                 WhoHit.Text = $"You Missed";
+                ValidShot = true;
             }
             else
             {
-                WhoHit.Text = $"Invalid Target";
+                ;
             }
             if (!Hit.IsOpen) {Hit.IsOpen = true; }
             if (game.Player2.ShipsLeft == 0)
             {
                 WhoHit.Text = "You win! You sank all of Player 2's Ships!";
             }
+            return ValidShot;
         }
 
         private void CloseHit (object sender, RoutedEventArgs e)
@@ -178,15 +185,17 @@ namespace Battleship_2.SubPages
         {
             throw new NotImplementedException();
         }
-        
-    
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
             game = (Game)e.Parameter;
+            CreateGrids();
         }
+    
 
-        string contents;
+
+    string contents;
         private async void Save_ClickAsync(object sender, RoutedEventArgs e)
         {
             var savepicker = new FileSavePicker();

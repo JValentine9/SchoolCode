@@ -44,7 +44,7 @@
                     Content="Save Game"
                     FontSize="36"
                     Height="100"
-                    Width="200" Click="Save_Click"/>
+                    Width="200" Click="Save_ClickAsync"/>
         </Grid>
         <Grid Grid.Row="0"
               Grid.Column="0"

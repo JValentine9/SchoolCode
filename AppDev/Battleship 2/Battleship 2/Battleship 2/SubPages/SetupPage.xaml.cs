@@ -489,6 +489,7 @@ namespace Battleship_2.SubPages
                                 game.Player2.Field[x, y + i].State = CellState.Ship;
                                 game.Player2.Field[x, y + i].boundShip = game.Player2.Carrier;
                                 game.Player2.Carrier.IsPlaced = true;
+                                Pass = true;
                             }
                         }
 
@@ -565,6 +566,7 @@ namespace Battleship_2.SubPages
                                 game.Player2.Field[x, y + i].State = CellState.Ship;
                                 game.Player2.Field[x, y + i].boundShip = game.Player2.Cruiser;
                                 game.Player2.Cruiser.IsPlaced = true;
+                                Pass = true;
                             }
                         }
 
@@ -641,6 +643,7 @@ namespace Battleship_2.SubPages
                                 game.Player2.Field[x, y + i].State = CellState.Ship;
                                 game.Player2.Field[x, y + i].boundShip = game.Player2.Battleship;
                                 game.Player2.Battleship.IsPlaced = true;
+                                Pass = true;
                             }
                         }
 
@@ -792,6 +795,7 @@ namespace Battleship_2.SubPages
                                 game.Player2.Field[x, y + i].State = CellState.Ship;
                                 game.Player2.Field[x, y + i].boundShip = game.Player2.Destroyer;
                                 game.Player2.Destroyer.IsPlaced = true;
+                                Pass = true;
                             }
                         }
 

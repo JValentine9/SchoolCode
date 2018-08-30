@@ -13,11 +13,14 @@ namespace Number_Game
         static public int inMax;
         static public int inMin = 1;
         static public int input;
+        static public List<int> guessed = new List<int>();
+        static bool IsValid = true;
 
         static void Main(string[] args)
         {
             bool stillPlaying = true;
             int cont;
+            
 
             while (stillPlaying)
             {
@@ -146,6 +149,7 @@ namespace Number_Game
         static public int InputValidation()
         {
             bool isInt = false;
+            IsValid = true;
             string inputTest;
 
             while (!isInt)
@@ -155,13 +159,23 @@ namespace Number_Game
 
                 if (int.TryParse(inputTest, out input))
                 {
-                    if (input > inMax || input < inMin)
+                    
+                    if (!guessed.Contains(input))
                     {
-                        Console.WriteLine($"Your input must be between {inMin} and {inMax}.");
+                        if (input > inMax || input < inMin)
+                        {
+                            Console.WriteLine($"Your input must be between {inMin} and {inMax}.");
+                        }
+                        else
+                        {
+                            isInt = true;
+                            guessed.Add(input);
+
+                        }
                     }
                     else
                     {
-                        isInt = true;
+                        Console.WriteLine($"You have already entered the value {input}");
                     }
                 }
                 else

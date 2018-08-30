@@ -28,6 +28,7 @@ namespace Battleship_2
     {
        
         Game game;
+        string contents;
 
         public MainPage()
         {

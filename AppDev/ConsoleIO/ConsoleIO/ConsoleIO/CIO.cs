@@ -41,16 +41,18 @@ namespace CSC160_ConsoleMenu
                     count++;
                     Console.WriteLine($"{count}. " + x);
                 }
+                intValue = PromptForInt("Please select a Menu Item", 0, options.Count());
             }
             else
             {
                 foreach (string x in options)
                 {
-                    Console.WriteLine($"{count}. " + x);
                     count++;
+                    Console.WriteLine($"{count}. " + x);
                 }
+                intValue = PromptForInt("Please select a Menu Item", 1, options.Count());
             }
-            intValue = PromptForInt("Please select a Menu Item", 0, options.Count());
+            
             
             return intValue;
         }
@@ -77,7 +79,7 @@ namespace CSC160_ConsoleMenu
                 Console.Write(message + ": ");
                 input = Console.ReadLine();
                 input = input.ToLower();
-                if (input == trueString || input == falseString)
+                if (input == trueString.ToLower() || input == falseString.ToLower())
                 {
                     valid = true;
                 }
@@ -158,9 +160,9 @@ namespace CSC160_ConsoleMenu
 
                 if (short.TryParse(input, out shortValue))
                 {
-                    if (shortValue < min)
+                    if (shortValue >= min)
                     {
-                        if (shortValue > max)
+                        if (shortValue <= max)
                         {
                             valid = true;
                         }
@@ -244,9 +246,9 @@ namespace CSC160_ConsoleMenu
 
                 if (long.TryParse(input, out longValue))
                 {
-                    if (longValue < min)
+                    if (longValue >= min)
                     {
-                        if (longValue > max)
+                        if (longValue <= max)
                         {
                             valid = true;
                         }
@@ -287,9 +289,9 @@ namespace CSC160_ConsoleMenu
 
                 if (float.TryParse(input, out floatValue))
                 {
-                    if (floatValue < min)
+                    if (floatValue >= min)
                     {
-                        if (floatValue > max)
+                        if (floatValue <= max)
                         {
                             valid = true;
                         }
@@ -330,9 +332,10 @@ namespace CSC160_ConsoleMenu
 
                 if (double.TryParse(input, out doubleValue))
                 {
-                    if (doubleValue < min)
+                    if (doubleValue >= min)
                     {
-                        if (doubleValue > max)
+                        if (doubleValue <= max)
+
                         {
                             valid = true;
                         }
@@ -373,9 +376,9 @@ namespace CSC160_ConsoleMenu
 
                 if (decimal.TryParse(input, out decimalValue))
                 {
-                    if (decimalValue < min)
+                    if (decimalValue >= min)
                     {
-                        if (decimalValue > max)
+                        if (decimalValue <= max)
                         {
                             valid = true;
                         }
@@ -452,9 +455,9 @@ namespace CSC160_ConsoleMenu
 
                 if (char.TryParse(input, out charValue))
                 {
-                    if (charValue < min)
+                    if (charValue >= min)
                     {
-                        if (charValue > max)
+                        if (charValue <= max)
                         {
                             valid = true;
                         }
