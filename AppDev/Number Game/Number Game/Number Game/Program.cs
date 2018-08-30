@@ -26,19 +26,26 @@ namespace Number_Game
 
                 Game(d);
                 Console.Write("Would you like to continue? 1. Yes 2. No");
-                cont = int.Parse(Console.ReadLine());
-                switch (cont)
+                if (Int32.TryParse(Console.ReadLine(), out cont))
                 {
-                    case 1:
-                        stillPlaying = true;
-                        break;
-                    case 2:
-                        stillPlaying = false;
-                        break;
-                    default:
-                        Console.WriteLine("Can't decide? another game then.");
-                        break;
+                    switch (cont)
+                    {
+                        case 1:
+                            stillPlaying = true;
+                            break;
+                        case 2:
+                            stillPlaying = false;
+                            break;
+                        default:
+                            Console.WriteLine("Can't decide? Another game then.");
+                            break;
+                    }
                 }
+                else
+                {
+                    Console.WriteLine("Please enter valid input");
+                }
+                
             }
         }
 
@@ -49,25 +56,32 @@ namespace Number_Game
             while (!valid)
             {
                 Console.Write("Please set a difficulty by entering the associated number. 1. Easy 2. Medium 3. Hard");
-                int caseSwitch = int.Parse(Console.ReadLine());
-                switch (caseSwitch)
+                int caseSwitch;
+                if (Int32.TryParse(Console.ReadLine(), out caseSwitch))
                 {
+                    switch (caseSwitch)
+                    {
 
-                    case 1:
-                        setDiff = Difficulty.Easy;
-                        valid = true;
-                        break;
-                    case 2:
-                        setDiff = Difficulty.Medium;
-                        valid = true;
-                        break;
-                    case 3:
-                        setDiff = Difficulty.Hard;
-                        valid = true;
-                        break;
-                    default:
-                        Console.WriteLine("Please enter a valid input");
-                        break;
+                        case 1:
+                            setDiff = Difficulty.Easy;
+                            valid = true;
+                            break;
+                        case 2:
+                            setDiff = Difficulty.Medium;
+                            valid = true;
+                            break;
+                        case 3:
+                            setDiff = Difficulty.Hard;
+                            valid = true;
+                            break;
+                        default:
+                            Console.WriteLine("Please enter a valid input");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter valid input");
                 }
             }
             return setDiff;
@@ -132,7 +146,6 @@ namespace Number_Game
         static public int InputValidation()
         {
             bool isInt = false;
-            bool isValid = false;
             string inputTest;
 
             while (!isInt)
@@ -148,9 +161,8 @@ namespace Number_Game
                     }
                     else
                     {
-                        isValid = true;
+                        isInt = true;
                     }
-                    isInt = true;
                 }
                 else
                 {

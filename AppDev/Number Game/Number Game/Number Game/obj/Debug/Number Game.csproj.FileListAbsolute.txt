@@ -5,3 +5,10 @@ C:\Repos\SchoolCode\AppDev\Number Game\Number Game\Number Game\obj\Debug\Number 
 C:\Repos\SchoolCode\AppDev\Number Game\Number Game\Number Game\obj\Debug\Number Game.csproj.CoreCompileInputs.cache
 C:\Repos\SchoolCode\AppDev\Number Game\Number Game\Number Game\obj\Debug\Number Game.exe
 C:\Repos\SchoolCode\AppDev\Number Game\Number Game\Number Game\obj\Debug\Number Game.pdb
+E:\Git Repos\SchoolCode\SchoolCode\AppDev\Number Game\Number Game\Number Game\bin\Debug\Number Game.exe.config
+E:\Git Repos\SchoolCode\SchoolCode\AppDev\Number Game\Number Game\Number Game\bin\Debug\Number Game.exe
+E:\Git Repos\SchoolCode\SchoolCode\AppDev\Number Game\Number Game\Number Game\bin\Debug\Number Game.pdb
+E:\Git Repos\SchoolCode\SchoolCode\AppDev\Number Game\Number Game\Number Game\obj\Debug\Number Game.csprojAssemblyReference.cache
+E:\Git Repos\SchoolCode\SchoolCode\AppDev\Number Game\Number Game\Number Game\obj\Debug\Number Game.csproj.CoreCompileInputs.cache
+E:\Git Repos\SchoolCode\SchoolCode\AppDev\Number Game\Number Game\Number Game\obj\Debug\Number Game.exe
+E:\Git Repos\SchoolCode\SchoolCode\AppDev\Number Game\Number Game\Number Game\obj\Debug\Number Game.pdb
